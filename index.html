@@ -1,627 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ehsan Khadim — Game Developer / Blender Artist</title>
-  <meta name="description" content="Ehsan Khadim. Game developer and Blender artist based in Pakistan. Available for remote work.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ehsan Khadim</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Ehsan Khadim. Game developer and Blender artist based in Pakistan. Available for remote work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+  /* Layout: full-bleed expanded display name over an engine-viewport portrait,
+     then wide editorial rows. One dark world, single safety-orange accent. */
+  :root {
+    --bg: #121212;
+    --surface: #1A1A1A;
+    --raise: #202020;
+    --border: #2E2E2E;
+    --text: #EDEDED;
+    --muted: #8A8A8A;
+    --accent: #FF5500;
+    --on-accent: #121212;
 
-  <style>
-    :root {
-      --bg: #121212;
-      --surface: #1A1A1A;
-      --border: #2E2E2E;
-      --line: 1px solid var(--border);
-      --text: #EDEDED;
-      --muted: #8A8A8A;
-      --accent: #FF5500;
+    --display: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
-      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-      --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    --wrap: 1240px;
+    --ease: cubic-bezier(.2, .7, .1, 1);
+    color-scheme: dark;
+  }
 
-      --radius: 0px;
-      --gutter: clamp(20px, 4vw, 56px);
-      --measure: 66ch;
-    }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 16px/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg);
+  }
+  img { max-width: 100%; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  ::selection { background: var(--accent); color: var(--on-accent); }
 
-    *, *::before, *::after { box-sizing: border-box; }
+  .wrap {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding-left: max(24px, env(safe-area-inset-left, 0px));
+    padding-right: max(24px, env(safe-area-inset-right, 0px));
+  }
 
-    html { -webkit-text-size-adjust: 100%; }
+  .eyebrow {
+    font: 500 11px/1.4 var(--mono);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 18px;
+    border: 1px solid var(--border); border-radius: 0;
+    background: transparent; color: var(--text);
+    font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer;
+    transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+  }
+  .btn:hover { border-color: var(--text); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .btn-primary:hover { background: var(--text); border-color: var(--text); }
+  .btn .arrow { transition: transform .25s var(--ease); }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn.is-copied { background: var(--text); border-color: var(--text); color: var(--on-accent); }
 
-    a {
-      color: var(--text);
-      text-decoration: underline;
-      text-decoration-color: var(--border);
-      text-underline-offset: 3px;
-      transition: color 120ms linear, text-decoration-color 120ms linear;
-    }
-    a:hover, a:focus-visible {
-      color: var(--accent);
-      text-decoration-color: var(--accent);
-    }
+  /* ---------- Top bar ---------- */
+  .bar {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: rgba(18, 18, 18, .94);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar .wrap {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    height: 64px;
+  }
+  .mark {
+    font: 800 15px/1 var(--display); font-stretch: 125%;
+    letter-spacing: -.01em; text-transform: uppercase; text-decoration: none;
+  }
+  .mark span { color: var(--accent); }
+  .bar nav { display: flex; align-items: center; gap: 28px; }
+  .bar nav a {
+    font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color .2s;
+  }
+  .bar nav a:hover { color: var(--text); }
+  .bar .btn { height: 38px; padding: 0 14px; }
 
-    :focus-visible {
-      outline: 1px solid var(--accent);
-      outline-offset: 2px;
-    }
+  /* ---------- Hero ---------- */
+  .hero { padding-block: clamp(48px, 7vw, 96px) clamp(56px, 8vw, 112px); position: relative; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(237,237,237,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(237,237,237,.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
+            mask-image: linear-gradient(to bottom, #000 40%, transparent);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: end;
+  }
+  .status {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border: 1px solid var(--border); background: var(--surface);
+    font: 500 11px/1 var(--mono); letter-spacing: .08em; color: var(--text);
+  }
+  .pulse { position: relative; width: 8px; height: 8px; background: var(--accent); flex: none; }
+  .pulse::after {
+    content: ""; position: absolute; inset: 0; background: var(--accent);
+    animation: ping 1.8s var(--ease) infinite;
+  }
+  @keyframes ping { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(3); opacity: 0; } }
 
-    .mono { font-family: var(--font-mono); }
+  .name {
+    margin: 28px 0 0;
+    font: 850 clamp(52px, 9.2vw, 132px)/.86 var(--display);
+    font-stretch: 125%;
+    letter-spacing: -.035em;
+    text-transform: uppercase;
+  }
+  .name .line { display: block; overflow: hidden; padding-bottom: .04em; }
+  .name .line > span { display: block; animation: rise .9s var(--ease) both; }
+  .name .line:nth-child(2) > span { animation-delay: .08s; }
+  .name .dot { color: var(--accent); }
+  @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
 
-    /* ---------- Page frame ---------- */
-    .sheet {
-      max-width: 1320px;
-      margin: 0 auto;
-      border-left: var(--line);
-      border-right: var(--line);
-      min-height: 100vh;
-    }
+  .role {
+    display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 28px 0 0;
+    font: 500 13px/1.4 var(--mono); letter-spacing: .04em; color: var(--muted);
+  }
+  .role b { color: var(--text); font-weight: 500; }
+  .lede {
+    margin: 28px 0 0; max-width: 34ch;
+    font: 400 clamp(19px, 1.9vw, 24px)/1.45 var(--body);
+    letter-spacing: -.01em; color: var(--text);
+    text-wrap: pretty;
+  }
+  .lede em { font-style: normal; color: var(--muted); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 10px var(--gutter);
-      border-bottom: var(--line);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .topbar span:last-child { text-align: right; }
+  /* Viewport-framed portrait */
+  .viewport { margin: 0; position: relative; }
+  .viewport-frame {
+    position: relative; border: 1px solid var(--border); background: var(--surface);
+    padding: 10px;
+  }
+  .viewport img {
+    display: block; width: 100%; height: auto; max-width: 100%;
+    aspect-ratio: 4 / 5; object-fit: cover;
+    filter: grayscale(100%) contrast(1.1);
+    transition: filter .6s var(--ease);
+  }
+  .viewport:hover img { filter: grayscale(0%) contrast(1.05); }
+  .corner { position: absolute; width: 18px; height: 18px; border: 0 solid var(--accent); pointer-events: none; }
+  .corner.tl { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+  .corner.tr { top: -1px; right: -1px; border-top-width: 2px; border-right-width: 2px; }
+  .corner.bl { bottom: -1px; left: -1px; border-bottom-width: 2px; border-left-width: 2px; }
+  .corner.br { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
+  .hud {
+    position: absolute; left: 20px; right: 20px;
+    display: flex; justify-content: space-between; gap: 12px;
+    font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text); pointer-events: none;
+  }
+  .hud span { background: rgba(18,18,18,.78); padding: 5px 7px; }
+  .hud.top { top: 20px; }
+  .hud.bottom { bottom: 20px; }
+  .crosshair {
+    position: absolute; top: 50%; left: 50%; width: 22px; height: 22px;
+    transform: translate(-50%, -50%); pointer-events: none; opacity: .55;
+  }
+  .crosshair::before, .crosshair::after { content: ""; position: absolute; background: var(--text); }
+  .crosshair::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+  .crosshair::after { top: 50%; left: 0; right: 0; height: 1px; }
 
-    .layout {
-      display: grid;
-      grid-template-columns: 35% 65%;
-    }
+  /* ---------- Spec strip ---------- */
+  .spec { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
+  .spec dl {
+    margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .spec dl > div { padding: 22px 24px; border-left: 1px solid var(--border); }
+  .spec dl > div:first-child { border-left: 0; padding-left: 0; }
+  .spec dt { margin-bottom: 8px; }
+  .spec dd { margin: 0; font: 600 15px/1.4 var(--body); font-variant-numeric: tabular-nums; }
+  .spec dd small { display: block; margin-top: 2px; font: 400 13px/1.45 var(--body); color: var(--muted); }
 
-    /* ---------- Sidebar ---------- */
-    .sidebar {
-      border-right: var(--line);
-    }
-    .sidebar-inner {
-      position: sticky;
-      top: 0;
-      padding: var(--gutter);
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
+  /* ---------- Sections ---------- */
+  .section { padding-block: clamp(72px, 9vw, 128px); border-bottom: 1px solid var(--border); }
+  .section-head {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: clamp(24px, 5vw, 72px); align-items: end; margin-bottom: clamp(40px, 5vw, 64px);
+  }
+  .h2 {
+    margin: 12px 0 0;
+    font: 800 clamp(34px, 4.6vw, 64px)/.95 var(--display);
+    font-stretch: 112%; letter-spacing: -.03em; text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .section-head p { margin: 0; max-width: 52ch; color: var(--muted); font-size: 17px; }
 
-    .portrait {
-      margin: 0;
-      border: var(--line);
-      background: var(--surface);
-      padding: 8px;
-    }
-    .portrait img {
-      display: block;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      filter: grayscale(100%) contrast(1.1);
-    }
-    .portrait figcaption {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 8px;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+  /* Currently building */
+  .build {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    border: 1px solid var(--border); background: var(--surface);
+  }
+  .build-info { padding: clamp(24px, 3vw, 40px); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 24px; }
+  .build-title {
+    margin: 0; font: 800 clamp(24px, 2.6vw, 34px)/1.05 var(--display); font-stretch: 112%;
+    letter-spacing: -.02em; text-transform: uppercase;
+  }
+  .build-info p { margin: 0; color: var(--muted); max-width: 46ch; }
+  .meta { margin: auto 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--border); }
+  .meta > div { padding-top: 16px; }
+  .meta dd { margin: 6px 0 0; font: 500 14px/1.3 var(--mono); }
+  .meta dd.live { color: var(--accent); }
 
-    .identity h1 {
-      margin: 0 0 6px;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: clamp(26px, 2.6vw, 34px);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
-    .identity .role {
-      margin: 0;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--muted);
-    }
+  .tasks { list-style: none; margin: 0; padding: 0; }
+  .tasks li {
+    display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 16px; align-items: start;
+    padding: 20px clamp(20px, 3vw, 32px); border-top: 1px solid var(--border);
+    transition: background-color .2s;
+  }
+  .tasks li:first-child { border-top: 0; }
+  .tasks li:hover { background: var(--raise); }
+  .chip {
+    display: inline-block; padding: 5px 7px; border: 1px solid var(--border);
+    font: 700 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+    text-align: center;
+  }
+  .chip.done { color: var(--text); border-color: #4A4A4A; }
+  .chip.wip { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+  .tasks strong { display: block; font-weight: 600; }
+  .tasks span.desc { display: block; margin-top: 2px; color: var(--muted); font-size: 15px; }
+  .tasks li.is-done strong { color: var(--muted); }
 
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      border: var(--line);
-      background: var(--surface);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: var(--text);
-      align-self: flex-start;
-    }
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--accent);
-      flex: none;
-      animation: blink 2.4s steps(1, end) infinite;
-    }
-    @keyframes blink {
-      0%, 70% { opacity: 1; }
-      70.01%, 100% { opacity: 0.25; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .status-dot { animation: none; }
-    }
+  /* Stack */
+  .stack { margin: 0; border-top: 1px solid var(--border); }
+  .stack > div {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .stack dt { font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .stack dd { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+  .stack dd span {
+    font: 700 clamp(20px, 2.3vw, 30px)/1.15 var(--display); font-stretch: 100%;
+    letter-spacing: -.02em; transition: color .2s;
+  }
+  .stack dd span:hover { color: var(--accent); }
+  .stack dd span small {
+    font: 400 12px/1 var(--mono); letter-spacing: .04em; color: var(--muted); margin-left: 6px;
+    vertical-align: middle;
+  }
 
-    /* Inspector-style key/value table */
-    .props {
-      margin: 0;
-      border-top: var(--line);
-      font-size: 13px;
-    }
-    .props div {
-      display: grid;
-      grid-template-columns: 88px 1fr;
-      gap: 12px;
-      padding: 9px 0;
-      border-bottom: var(--line);
-    }
-    .props dt {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      padding-top: 2px;
-    }
-    .props dd { margin: 0; }
-    .props dd small {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-    }
+  /* Remote work */
+  .work { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+  .work article {
+    padding: clamp(24px, 3vw, 40px); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 14px; transition: background-color .2s;
+  }
+  .work article:hover { background: var(--surface); }
+  .work h3 {
+    margin: 0; font: 800 clamp(20px, 2vw, 26px)/1.1 var(--display); font-stretch: 112%;
+    letter-spacing: -.02em; text-transform: uppercase;
+  }
+  .work p { margin: 0; color: var(--muted); max-width: 44ch; }
+  .work code {
+    font: 500 12px/1.5 var(--mono); color: var(--text); background: var(--raise);
+    border: 1px solid var(--border); padding: 10px 12px; display: block; margin-top: auto;
+    overflow-x: auto; white-space: pre;
+  }
+  .work code .c { color: var(--muted); }
+  .work code .k { color: var(--accent); }
 
-    .email-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px 12px;
-    }
-    .email-row a { word-break: break-all; }
+  /* Contact */
+  .contact { padding-block: clamp(80px, 10vw, 140px) 48px; }
+  .contact .big {
+    margin: 16px 0 0;
+    font: 850 clamp(40px, 7.4vw, 108px)/.9 var(--display); font-stretch: 125%;
+    letter-spacing: -.035em; text-transform: uppercase; text-wrap: balance;
+  }
+  .contact .big span { color: var(--accent); }
+  .mailbox {
+    margin-top: 40px; display: flex; flex-wrap: wrap; align-items: stretch;
+    border: 1px solid var(--border); max-width: 720px;
+  }
+  .mailbox .addr {
+    flex: 1 1 260px; min-width: 0; padding: 18px 20px;
+    font: 500 clamp(15px, 1.6vw, 19px)/1.3 var(--mono); user-select: all; overflow-wrap: anywhere;
+    display: flex; align-items: center;
+  }
+  .mailbox .btn { height: auto; min-height: 60px; border-width: 0 0 0 1px; }
+  .mailbox .btn-primary { border-color: var(--accent); }
+  .elsewhere { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .foot {
+    margin-top: clamp(64px, 8vw, 112px); padding-top: 20px; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
+  }
 
-    .btn-copy {
-      appearance: none;
-      border: var(--line);
-      border-radius: var(--radius);
-      background: transparent;
-      color: var(--text);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 4px 8px;
-      cursor: pointer;
-      transition: border-color 120ms linear, color 120ms linear;
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1000px) {
+    .spec dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .spec dl > div:nth-child(3) { border-left: 0; padding-left: 0; }
+    .spec dl > div:nth-child(n+3) { border-top: 1px solid var(--border); }
+    .bar nav a { display: none; }
+  }
+  @media (max-width: 850px) {
+    .wrap {
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
     }
-    .btn-copy:hover { border-color: var(--text); }
-    .btn-copy.is-copied {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 18px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-    }
-    .links a::after { content: " \2197"; color: var(--muted); }
-
-    /* ---------- Main column ---------- */
-    .main { min-width: 0; }
-
-    .block {
-      padding: var(--gutter);
-      border-bottom: var(--line);
-    }
-    .block:last-child { border-bottom: 0; }
-
-    .block-head {
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-      margin: 0 0 24px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .block-head .idx { color: var(--text); }
-    .block-head::after {
-      content: "";
-      flex: 1;
-      border-top: var(--line);
-      transform: translateY(-3px);
-    }
-
-    .intro p {
-      margin: 0;
-      max-width: var(--measure);
-      font-size: clamp(18px, 1.7vw, 22px);
-      line-height: 1.5;
-      letter-spacing: -0.005em;
-    }
-    .intro p + p { margin-top: 0.9em; }
-    .intro .muted { color: var(--muted); }
-
-    /* Log entry */
-    .log {
-      border: var(--line);
-      background: var(--surface);
-    }
-    .log-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px 24px;
-      padding: 12px 16px;
-      border-bottom: var(--line);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .log-header strong {
-      color: var(--text);
-      font-weight: 500;
-    }
-    .log-body { padding: 18px 16px 20px; }
-    .log-body > p {
-      margin: 0 0 18px;
-      max-width: var(--measure);
-    }
-
-    .entries {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-    .entries li {
-      display: grid;
-      grid-template-columns: 64px 1fr;
-      gap: 12px;
-      padding: 8px 0;
-      border-top: var(--line);
-    }
-    .entries li:first-child { border-top: 0; }
-    .tag { color: var(--muted); }
-    .tag.done { color: var(--text); }
-    .tag.wip { color: var(--accent); }
-
-    .log-footer {
-      padding: 10px 16px;
-      border-top: var(--line);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    /* Stack rows */
-    .stack { margin: 0; }
-    .stack div {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 24px;
-      padding: 16px 0;
-      border-top: var(--line);
-    }
-    .stack div:last-child { border-bottom: var(--line); }
-    .stack dt {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      padding-top: 3px;
-    }
-    .stack dd { margin: 0; }
-    .stack dd span:not(:last-child)::after {
-      content: " / ";
-      color: var(--border);
-      white-space: pre;
-    }
-
-    /* Work list */
-    .work {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      counter-reset: w;
-      max-width: var(--measure);
-    }
-    .work li {
-      counter-increment: w;
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 12px;
-      padding: 14px 0;
-      border-top: var(--line);
-    }
-    .work li:last-child { border-bottom: var(--line); }
-    .work li::before {
-      content: counter(w, decimal-leading-zero);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--muted);
-      padding-top: 3px;
-    }
-    .work strong { font-weight: 600; }
-    .work p { margin: 2px 0 0; color: var(--muted); }
-
-    .colophon {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 8px 24px;
-      padding: 14px var(--gutter);
-      border-top: var(--line);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden; clip: rect(0 0 0 0);
-      white-space: nowrap; border: 0;
-    }
-
-    /* ---------- Responsive ---------- */
-    @media (max-width: 1100px) {
-      .stack div { grid-template-columns: 120px 1fr; gap: 16px; }
-    }
-
-    @media (max-width: 850px) {
-      :root { --gutter: 16px; }
-      .sheet { border-left: 0; border-right: 0; }
-      .layout { grid-template-columns: 1fr; }
-      .sidebar { border-right: 0; border-bottom: var(--line); }
-      .sidebar-inner { position: static; }
-      .portrait { max-width: 320px; }
-      .topbar span:last-child { display: none; }
-      .stack div { grid-template-columns: 1fr; gap: 4px; }
-      .entries li { grid-template-columns: 56px 1fr; }
-    }
-  </style>
+    .hero-grid, .section-head, .build, .stack > div { grid-template-columns: minmax(0, 1fr); }
+    .viewport { max-width: 420px; order: -1; }
+    .build-info { border-right: 0; border-bottom: 1px solid var(--border); }
+    .stack > div { gap: 12px; }
+    .work { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .spec dl { grid-template-columns: minmax(0, 1fr); }
+    .spec dl > div { border-left: 0; padding-left: 0; }
+    .spec dl > div:nth-child(n+2) { border-top: 1px solid var(--border); }
+    .tasks li { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .tasks .chip { justify-self: start; }
+    .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bar .btn .label-long { display: none; }
+    .mailbox .btn { flex: 1 1 100%; border-width: 1px 0 0 0; justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
 </head>
 <body>
-  <div class="sheet">
 
-    <div class="topbar" aria-hidden="true">
-      <span>ehsan_khadim.sheet</span>
-      <span>Rev. 2026.11 &middot; PK &middot; UTC+5</span>
-    </div>
-
-    <div class="layout">
-
-      <!-- ===================== SIDEBAR ===================== -->
-      <aside class="sidebar" aria-label="Profile and contact">
-        <div class="sidebar-inner">
-
-          <figure class="portrait">
-            <img src="profile.jpg" alt="Portrait of Ehsan Khadim" width="480" height="600">
-            <figcaption><span>IMG_001</span><span>4:5</span></figcaption>
-          </figure>
-
-          <header class="identity">
-            <h1>Ehsan Khadim</h1>
-            <p class="role">Game Developer | Blender Artist</p>
-          </header>
-
-          <p class="status" role="status">
-            <span class="status-dot" aria-hidden="true"></span>
-            [STATUS: AVAILABLE FOR REMOTE WORK]
-          </p>
-
-          <dl class="props">
-            <div>
-              <dt>Location</dt>
-              <dd>Pakistan</dd>
-            </div>
-            <div>
-              <dt>Timezone</dt>
-              <dd>UTC+5 / PKT <small>Flexible overlap with EU &amp; US hours</small></dd>
-            </div>
-            <div>
-              <dt>Email</dt>
-              <dd class="email-row">
-                <!-- REPLACE: set the real address here and in data-email below -->
-                <a id="email-link" href="mailto:ehsan.khadim@example.com">ehsan.khadim@example.com</a>
-                <button type="button" class="btn-copy" id="copy-email" data-email="ehsan.khadim@example.com">Copy</button>
-              </dd>
-            </div>
-          </dl>
-
-          <nav aria-label="Elsewhere">
-            <!-- REPLACE: point these at real profiles -->
-            <ul class="links">
-              <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
-              <li><a href="https://www.linkedin.com/" rel="noopener">LinkedIn</a></li>
-              <li><a href="https://www.artstation.com/" rel="noopener">ArtStation</a></li>
-              <li><a href="https://itch.io/" rel="noopener">itch.io</a></li>
-            </ul>
-          </nav>
-
-        </div>
-      </aside>
-
-      <!-- ===================== MAIN ===================== -->
-      <main class="main">
-
-        <section class="block intro" aria-labelledby="h-intro">
-          <h2 class="block-head" id="h-intro"><span class="idx">00</span> Overview</h2>
-          <p>I build small, playable games end to end: gameplay code, systems, and the 3D assets that go in them.</p>
-          <p>Because I model in Blender and program the engine side myself, I can take a mechanic from a sketch to a working in-engine build without waiting on a hand-off.</p>
-          <p class="muted">I prototype early, test on real hardware, and cut features that don't make the game better. Short builds and honest playtests over long design documents.</p>
-        </section>
-
-        <section class="block" aria-labelledby="h-current">
-          <h2 class="block-head" id="h-current"><span class="idx">01</span> Currently Building</h2>
-
-          <!-- REPLACE: describe the actual current prototype -->
-          <article class="log">
-            <header class="log-header">
-              <span><strong>PROJECT:</strong> untitled_physics_prototype</span>
-              <span><strong>BUILD:</strong> 0.3.x &middot; <strong>STATE:</strong> prototype</span>
-            </header>
-            <div class="log-body">
-              <p>A third-person movement and physics-interaction prototype. The goal is a character controller that feels responsive on keyboard and gamepad, and a small set of objects the player can push, carry and stack without the physics falling apart.</p>
-              <ul class="entries">
-                <li><span class="tag done">[DONE]</span><span>Character controller with coyote time, jump buffering and slope handling.</span></li>
-                <li><span class="tag done">[DONE]</span><span>Blender-to-engine pipeline: modular props, LODs, consistent scale and pivot conventions.</span></li>
-                <li><span class="tag wip">[WIP]</span><span>Grab / carry system with weight-based movement penalties.</span></li>
-                <li><span class="tag wip">[WIP]</span><span>Camera collision and framing in tight interior spaces.</span></li>
-                <li><span class="tag">[NEXT]</span><span>Graybox test level and a short playtest round to tune feel.</span></li>
-              </ul>
-            </div>
-            <footer class="log-footer">Last updated: November 2026</footer>
-          </article>
-        </section>
-
-        <section class="block" aria-labelledby="h-stack">
-          <h2 class="block-head" id="h-stack"><span class="idx">02</span> Technical Stack</h2>
-          <!-- REPLACE: adjust to the exact tools used -->
-          <dl class="stack">
-            <div>
-              <dt>Engine</dt>
-              <dd><span>Unity</span><span>Unreal Engine (working knowledge)</span></dd>
-            </div>
-            <div>
-              <dt>Languages</dt>
-              <dd><span>C#</span><span>C++</span><span>Python (Blender scripting)</span></dd>
-            </div>
-            <div>
-              <dt>Tools</dt>
-              <dd><span>Blender</span><span>Substance Painter</span><span>Git</span><span>Visual Studio / Rider</span></dd>
-            </div>
-            <div>
-              <dt>Focus Areas</dt>
-              <dd><span>Gameplay programming</span><span>Character controllers</span><span>Hard-surface &amp; prop modeling</span><span>Asset optimization</span></dd>
-            </div>
-          </dl>
-        </section>
-
-        <section class="block" aria-labelledby="h-remote">
-          <h2 class="block-head" id="h-remote"><span class="idx">03</span> How I Work (Remote)</h2>
-          <ol class="work">
-            <li>
-              <div>
-                <strong>Async by default.</strong>
-                <p>Written updates at the end of each working day: what changed, what's blocked, what's next. No need to be online at the same time to stay in sync.</p>
-              </div>
-            </li>
-            <li>
-              <div>
-                <strong>Version control discipline.</strong>
-                <p>Git with small, descriptive commits, feature branches and pull requests. Large binary assets handled with Git LFS.</p>
-              </div>
-            </li>
-            <li>
-              <div>
-                <strong>Clear documentation.</strong>
-                <p>Readable code, short READMEs for each system, and notes on asset naming and import settings so the next person can pick things up.</p>
-              </div>
-            </li>
-            <li>
-              <div>
-                <strong>Fluent English communication.</strong>
-                <p>Comfortable with written specs, code review comments and video calls. I ask questions early instead of guessing.</p>
-              </div>
-            </li>
-          </ol>
-        </section>
-
-      </main>
-    </div>
-
-    <footer class="colophon">
-      <span>&copy; <span id="year">2026</span> Ehsan Khadim</span>
-      <span>Set in Inter &amp; JetBrains Mono</span>
-    </footer>
-
+<header class="bar">
+  <div class="wrap">
+    <a class="mark" href="#top">Ehsan Khadim<span>.</span></a>
+    <nav aria-label="Sections">
+      <a href="#building">Building</a>
+      <a href="#stack">Stack</a>
+      <a href="#remote">Remote</a>
+      <a href="#contact">Contact</a>
+      <button type="button" class="btn btn-primary js-copy" id="copy-top">Copy<span class="label-long">&nbsp;email</span></button>
+    </nav>
   </div>
+</header>
 
-  <script>
-    (function () {
-      var btn = document.getElementById('copy-email');
-      var year = document.getElementById('year');
-      if (year) year.textContent = new Date().getFullYear();
-      if (!btn) return;
+<main id="top">
 
-      var label = btn.textContent;
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="status" role="status"><span class="pulse" aria-hidden="true"></span>STATUS: AVAILABLE FOR REMOTE WORK</p>
+        <h1 class="name">
+          <span class="line"><span>Ehsan</span></span>
+          <span class="line"><span>Khadim<span class="dot">.</span></span></span>
+        </h1>
+        <p class="role"><b>Game Developer</b><b>Blender Artist</b><span>Pakistan &middot; UTC+5</span></p>
+        <p class="lede">I build small, playable games end to end: gameplay code, systems, and the 3D assets that go in them. <em>Prototype early, playtest often, cut what doesn't help.</em></p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#building">See current build <span class="arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="btn" href="#contact">Get in touch</a>
+        </div>
+      </div>
+
+      <figure class="viewport">
+        <div class="viewport-frame">
+          <img src="profile.jpg" alt="Portrait of Ehsan Khadim" width="480" height="600">
+          <span class="corner tl"></span><span class="corner tr"></span>
+          <span class="corner bl"></span><span class="corner br"></span>
+          <div class="hud top" aria-hidden="true"><span>Perspective</span><span>Lit</span></div>
+          <div class="crosshair" aria-hidden="true"></div>
+          <div class="hud bottom" aria-hidden="true"><span>Cam_01</span><span>4:5</span></div>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ SPEC STRIP ============ -->
+  <section class="spec" aria-label="Quick facts">
+    <div class="wrap">
+      <dl>
+        <div><dt class="eyebrow">Role</dt><dd>Gameplay + 3D<small>Code and assets, one person</small></dd></div>
+        <div><dt class="eyebrow">Timezone</dt><dd>UTC+5 / PKT<small>Flexible overlap with EU &amp; US hours</small></dd></div>
+        <div><dt class="eyebrow">EU overlap</dt><dd>Full working day<small>09:00&ndash;18:00 CET = 13:00&ndash;22:00 PKT</small></dd></div>
+        <div><dt class="eyebrow">US East overlap</dt><dd>09:00&ndash;12:00 ET<small>= 19:00&ndash;22:00 PKT, later on request</small></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ CURRENTLY BUILDING ============ -->
+  <section class="section" id="building">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Dev log</p>
+          <h2 class="h2">Currently building</h2>
+        </div>
+        <p>No polished gallery here yet. This is what is on my desk right now, and where each piece stands.</p>
+      </div>
+
+      <!-- REPLACE: describe the actual current prototype -->
+      <article class="build">
+        <div class="build-info">
+          <p class="eyebrow">Project</p>
+          <h3 class="build-title">Third-person physics prototype</h3>
+          <p>A character controller that feels responsive on keyboard and gamepad, plus a small set of objects the player can push, carry and stack without the physics falling apart.</p>
+          <dl class="meta">
+            <div><dt class="eyebrow">Build</dt><dd>0.3.x</dd></div>
+            <div><dt class="eyebrow">State</dt><dd class="live">Prototype</dd></div>
+            <div><dt class="eyebrow">Updated</dt><dd>Nov 2026</dd></div>
+          </dl>
+        </div>
+        <ul class="tasks">
+          <li class="is-done"><span class="chip done">Done</span><div><strong>Character controller</strong><span class="desc">Coyote time, jump buffering, slope handling.</span></div></li>
+          <li class="is-done"><span class="chip done">Done</span><div><strong>Blender-to-engine pipeline</strong><span class="desc">Modular props, LODs, consistent scale and pivot conventions.</span></div></li>
+          <li><span class="chip wip">WIP</span><div><strong>Grab and carry system</strong><span class="desc">Weight-based movement penalties while holding objects.</span></div></li>
+          <li><span class="chip wip">WIP</span><div><strong>Camera collision</strong><span class="desc">Framing that holds up in tight interior spaces.</span></div></li>
+          <li><span class="chip">Next</span><div><strong>Graybox level + playtest</strong><span class="desc">A short test round to tune game feel.</span></div></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ STACK ============ -->
+  <section class="section" id="stack">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Tools of the trade</p>
+          <h2 class="h2">Technical stack</h2>
+        </div>
+        <p>What I use day to day, from first blockout to a build you can play.</p>
+      </div>
+      <!-- REPLACE: adjust to the exact tools used -->
+      <dl class="stack">
+        <div><dt>Engine</dt><dd><span>Unity</span><span>Unreal Engine<small>working knowledge</small></span></dd></div>
+        <div><dt>Languages</dt><dd><span>C#</span><span>C++</span><span>Python<small>Blender scripting</small></span></dd></div>
+        <div><dt>Tools</dt><dd><span>Blender</span><span>Substance Painter</span><span>Git + LFS</span><span>Rider</span></dd></div>
+        <div><dt>Focus areas</dt><dd><span>Gameplay programming</span><span>Character controllers</span><span>Hard-surface modeling</span><span>Asset optimization</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ REMOTE ============ -->
+  <section class="section" id="remote">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Working together</p>
+          <h2 class="h2">How I work remotely</h2>
+        </div>
+        <p>You should always know what I'm doing without having to ask.</p>
+      </div>
+      <div class="work">
+        <article>
+          <p class="eyebrow">Async</p>
+          <h3>Daily written updates</h3>
+          <p>End of each day: what changed, what is blocked, what is next. No need to be online at the same time to stay in sync.</p>
+          <code><span class="c"># daily.md</span>
+<span class="k">done:</span>  carry system, weight curve
+<span class="k">next:</span>  camera collision pass</code>
+        </article>
+        <article>
+          <p class="eyebrow">Version control</p>
+          <h3>Git discipline</h3>
+          <p>Small, descriptive commits, feature branches and pull requests. Large binary assets handled with Git LFS.</p>
+          <code><span class="k">git</span> commit -m "Add coyote time to jump"</code>
+        </article>
+        <article>
+          <p class="eyebrow">Documentation</p>
+          <h3>Clear handover</h3>
+          <p>Readable code, a short README per system, and notes on asset naming and import settings so anyone can pick it up.</p>
+          <code>SM_Crate_01_LOD0.fbx  <span class="c">// mesh_name_variant_lod</span></code>
+        </article>
+        <article>
+          <p class="eyebrow">Communication</p>
+          <h3>Fluent English</h3>
+          <p>Comfortable with written specs, code review comments and video calls. I ask questions early instead of guessing.</p>
+          <code><span class="c">// overlap</span>  EU full day &middot; US East mornings</code>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h2 class="big">Open to remote roles and contract work<span>.</span></h2>
+
+      <!-- REPLACE: set the real address in both places below -->
+      <div class="mailbox">
+        <span class="addr" id="email-text">ehsan.khadim@example.com</span>
+        <button type="button" class="btn btn-primary js-copy" id="copy-main">Copy email</button>
+        <a class="btn" href="mailto:ehsan.khadim@example.com">Write <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+
+      <!-- REPLACE: point these at real profiles -->
+      <div class="elsewhere">
+        <a class="btn" href="https://github.com/" target="_blank" rel="noopener">GitHub &nearr;</a>
+        <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn &nearr;</a>
+        <a class="btn" href="https://www.artstation.com/" target="_blank" rel="noopener">ArtStation &nearr;</a>
+        <a class="btn" href="https://itch.io/" target="_blank" rel="noopener">itch.io &nearr;</a>
+      </div>
+
+      <footer class="foot">
+        <span class="eyebrow">&copy; <span id="year">2026</span> Ehsan Khadim</span>
+        <span class="eyebrow">Pakistan &middot; UTC+5</span>
+      </footer>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  (function () {
+    var EMAIL = document.getElementById('email-text').textContent.trim();
+    var year = document.getElementById('year');
+    if (year) year.textContent = new Date().getFullYear();
+
+    function selectEmail() {
+      var el = document.getElementById('email-text');
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    function legacyCopy() {
+      var ta = document.createElement('textarea');
+      ta.value = EMAIL;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    document.querySelectorAll('.js-copy').forEach(function (btn) {
+      var original = btn.innerHTML;
       var timer;
-
-      function fallbackCopy(text) {
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.position = 'absolute';
-        ta.style.left = '-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        var ok = false;
-        try { ok = document.execCommand('copy'); } catch (e) {}
-        document.body.removeChild(ta);
-        return ok;
-      }
-
-      function feedback(text, ok) {
-        btn.textContent = text;
+      function show(ok) {
+        btn.textContent = ok ? 'Copied' : 'Select + copy';
         btn.classList.toggle('is-copied', ok);
+        if (!ok) selectEmail();
         clearTimeout(timer);
         timer = setTimeout(function () {
-          btn.textContent = label;
+          btn.innerHTML = original;
           btn.classList.remove('is-copied');
         }, 1800);
       }
-
       btn.addEventListener('click', function () {
-        var email = btn.getAttribute('data-email');
-        if (navigator.clipboard && window.isSecureContext) {
-          navigator.clipboard.writeText(email)
-            .then(function () { feedback('Copied', true); })
-            .catch(function () { var ok = fallbackCopy(email); feedback(ok ? 'Copied' : 'Failed', ok); });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(EMAIL)
+            .then(function () { show(true); })
+            .catch(function () { show(legacyCopy()); });
         } else {
-          var ok = fallbackCopy(email); feedback(ok ? 'Copied' : 'Failed', ok);
+          show(legacyCopy());
         }
       });
-    })();
-  </script>
+    });
+  })();
+</script>
 </body>
 </html>
