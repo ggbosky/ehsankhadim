@@ -9,7 +9,7 @@
 <meta name="description" content="Ehsan Khadim. Game developer and Blender artist based in Pakistan. Available for remote work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <style>
   /* Layout: full-bleed hero over a live wireframe viewport, then centered
      sections of soft cards, an amber stats band and a dark call-to-action. */
@@ -97,10 +97,11 @@
   .btn.is-copied { background: #16A34A; color: #fff; box-shadow: none; }
 
   .badge {
-    display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px;
-    background: var(--tint); color: var(--tint-text); font: 500 14px/1.4 var(--font-body);
+    display: inline-flex; align-items: center; gap: 12px;
+    color: var(--tint-text); font: 700 12px/1.4 var(--font-body); letter-spacing: .16em; text-transform: uppercase;
   }
-  .badge-solid { background: var(--amber); color: #fff; font-weight: 600; }
+  .badge::before { content: ""; width: 28px; height: 2px; background: var(--amber); }
+  .section-head .badge::after { content: ""; width: 28px; height: 2px; background: var(--amber); }
   .dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; position: relative; }
   .dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #fff; animation: ping 1.6s ease-out infinite; }
   @keyframes ping { to { transform: scale(2.6); opacity: 0; } }
@@ -141,7 +142,6 @@
     background: linear-gradient(to bottom, rgba(15,20,28,.85) 0%, rgba(15,20,28,.30) 30%, rgba(15,20,28,.40) 70%, rgba(15,20,28,.92) 100%);
   }
   .hero-inner { width: 100%; }
-  .pixel { font-family: "Press Start 2P", "Courier New", monospace; font-weight: 400; letter-spacing: 0; }
 
   .hero-inner { position: relative; z-index: 1; padding-block: 96px; max-width: 860px; }
   .hero h1 {
@@ -195,10 +195,6 @@
   .profile-photo { margin: 0; display: flex; flex-direction: column; gap: 14px; }
   .photo-frame { position: relative; border-radius: 12px; overflow: hidden; background: var(--bg-alt); }
   .photo-frame img { display: block; width: 100%; height: auto; max-width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-  .photo-frame .p1 {
-    position: absolute; top: 12px; left: 12px; padding: 7px 9px; border-radius: 6px;
-    background: var(--amber); color: #fff; font-size: 8px; line-height: 1;
-  }
   .profile-photo figcaption { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
   .profile-photo figcaption b { color: var(--text); font: 700 17px/1.2 var(--font-head); }
   .online { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #16A34A; font-weight: 500; }
@@ -211,7 +207,7 @@
   .sheet > div:nth-child(-n+2) { border-top: 0; }
   .sheet > div:nth-child(even) { border-left: 1px solid var(--border); }
   .sheet .icon-circle { width: 38px; height: 38px; font-size: 18px; }
-  .sheet dt { font-size: 8px; line-height: 1.4; color: var(--muted); }
+  .sheet dt { font: 700 11px/1.4 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
   .sheet dd { margin: 4px 0 0; color: var(--text); font: 600 15px/1.3 var(--font-body); }
   .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
   .two .card p { margin: 18px 0 0; }
@@ -235,7 +231,9 @@
   .build h3 { font: 700 24px/1.3 var(--font-head); margin-top: 16px; }
   .build-desc { margin: 14px 0 0; }
   .build-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-  .pill { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 999px; background: var(--bg-alt); border: 1px solid var(--border); font-size: 14px; color: var(--text); }
+  .pill { display: inline-flex; align-items: center; font-size: 14px; color: var(--muted); }
+  .pill + .pill::before { content: ""; width: 4px; height: 4px; margin: 0 12px 0 2px; background: var(--border); }
+  .build-meta { gap: 0 !important; }
   .tasks { list-style: none; margin: 0; padding: 0; }
   .tasks li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 16px 0; border-top: 1px solid var(--border); }
   .tasks li:first-child { border-top: 0; padding-top: 0; }
@@ -243,10 +241,12 @@
   .tasks .icon-circle { width: 40px; height: 40px; font-size: 19px; }
   .tasks .t { color: var(--text); font-weight: 600; line-height: 1.35; }
   .tasks .d { font-size: 14px; color: var(--muted); }
-  .state { padding: 4px 12px; border-radius: 999px; font: 600 12px/1.4 var(--font-body); white-space: nowrap; }
-  .state.done { background: #DCFCE7; color: #166534; }
-  .state.wip { background: var(--amber); color: #fff; }
-  .state.next { background: var(--bg-alt); color: var(--muted); border: 1px solid var(--border); }
+  .state { display: inline-flex; align-items: center; gap: 8px; font: 700 11px/1.4 var(--font-body); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+  .state::before { content: ""; width: 8px; height: 8px; background: currentColor; }
+  .state.done { color: #16A34A; }
+  .state.wip { color: var(--amber); }
+  .state.next { color: var(--muted); }
+  .state.next::before { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
   .tasks li.is-wait .icon-circle { background: var(--bg-alt); color: var(--muted); }
 
   /* Feature cards (stack / remote) */
@@ -256,7 +256,7 @@
   .feature h3 { margin-top: 20px; font: 700 20px/1.3 var(--font-head); }
   .feature p { margin: 12px 0 0; font-size: 15px; }
   .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
-  .tags span { padding: 5px 12px; border-radius: 999px; background: var(--tint); color: var(--tint-text); font: 500 13px/1.4 var(--font-body); }
+  .tags span { padding: 5px 10px; border-radius: 4px; border: 1px solid var(--border); color: var(--text); font: 500 13px/1.4 var(--font-body); }
 
   /* Stats band */
   .stats { background: var(--amber); color: #fff; padding-block: clamp(48px, 6vw, 72px); }
@@ -271,13 +271,13 @@
   .cta .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 32px; }
   .email-box {
     display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 10px 18px;
-    border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+    border-radius: 8px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
     font-size: 16px; color: #fff; user-select: all; overflow-wrap: anywhere;
   }
   .email-box .icon { color: var(--amber-hi); }
   .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; }
   .socials a {
-    padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); color: rgba(255,255,255,.85);
+    padding: 8px 16px; border-radius: 6px; border: 1px solid rgba(255,255,255,.18); color: rgba(255,255,255,.85);
     font-size: 14px; text-decoration: none; transition: border-color .2s, color .2s;
   }
   .socials a:hover { border-color: var(--amber); color: var(--amber-hi); }
@@ -409,7 +409,6 @@
         <figure class="profile-photo">
           <div class="photo-frame">
             <img src="profile.jpg" alt="Portrait of Ehsan Khadim" width="480" height="600">
-            <span class="p1 pixel">P1</span>
           </div>
           <figcaption><b>Ehsan Khadim</b><span class="online">Available</span></figcaption>
         </figure>
@@ -419,10 +418,10 @@
           <p>I build small, playable games end to end: gameplay code, systems, and the 3D assets that go in them. Because I handle both sides, I can test a mechanic with real models instead of grey boxes.</p>
           <p>I prototype early, test on real hardware, and cut features that don't make the game better.</p>
           <dl class="sheet">
-            <div><span class="icon-circle"><svg class="icon"><use href="#i-code"/></svg></span><div><dt class="pixel">Main skill</dt><dd>Gameplay code (C#)</dd></div></div>
-            <div><span class="icon-circle"><svg class="icon"><use href="#i-box"/></svg></span><div><dt class="pixel">Second skill</dt><dd>3D modeling (Blender)</dd></div></div>
-            <div><span class="icon-circle"><svg class="icon"><use href="#i-pin"/></svg></span><div><dt class="pixel">Region</dt><dd>Pakistan &middot; UTC+5</dd></div></div>
-            <div><span class="icon-circle"><svg class="icon"><use href="#i-chat"/></svg></span><div><dt class="pixel">Comms</dt><dd>Fluent English</dd></div></div>
+            <div><span class="icon-circle"><svg class="icon"><use href="#i-code"/></svg></span><div><dt>Main skill</dt><dd>Gameplay code (C#)</dd></div></div>
+            <div><span class="icon-circle"><svg class="icon"><use href="#i-box"/></svg></span><div><dt>Second skill</dt><dd>3D modeling (Blender)</dd></div></div>
+            <div><span class="icon-circle"><svg class="icon"><use href="#i-pin"/></svg></span><div><dt>Region</dt><dd>Pakistan &middot; UTC+5</dd></div></div>
+            <div><span class="icon-circle"><svg class="icon"><use href="#i-chat"/></svg></span><div><dt>Comms</dt><dd>Fluent English</dd></div></div>
           </dl>
         </div>
       </article>
