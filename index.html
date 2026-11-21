@@ -133,8 +133,14 @@
   /* ---------- Hero ---------- */
   .hero {
     position: relative; overflow: hidden; background: #0F141C; color: #fff;
-    min-height: max(720px, calc(100svh - 80px)); display: grid; place-items: center; text-align: center;
+    min-height: max(560px, calc(100svh - 80px)); display: grid; place-items: center; text-align: center;
   }
+  .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to bottom, rgba(15,20,28,.85) 0%, rgba(15,20,28,.30) 30%, rgba(15,20,28,.40) 70%, rgba(15,20,28,.92) 100%);
+  }
+  .hero-inner { width: 100%; }
   .pixel { font-family: "Press Start 2P", "Courier New", monospace; font-weight: 400; letter-spacing: 0; }
 
   .hero-inner { position: relative; z-index: 1; padding-block: 96px; max-width: 860px; }
@@ -370,6 +376,10 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="home">
+    <!-- REPLACE: swap hero-loop.mp4 for a real Blender / gameplay reel (muted, 10-20 s loop) -->
+    <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto" poster="hero-poster.jpg" aria-hidden="true">
+      <source src="hero-loop.mp4" type="video/mp4">
+    </video>
     <div class="wrap hero-inner">
       <h1>Game Developer &amp; <span class="hl">Blender Artist</span></h1>
       <p class="sub">I'm Ehsan Khadim. I write the gameplay code and model the 3D assets, so an idea goes from sketch to a playable build without waiting on a hand-off.</p>
@@ -631,7 +641,11 @@
     });
   });
 
-  /* Scroll progress, back to top, active nav */
+  /* Background video: respect reduced motion */
+  var vid = document.getElementById('hero-video');
+  if (vid && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { vid.removeAttribute('autoplay'); vid.pause(); }
+
+  /* Header shadow, back to top, active nav */
   var header = document.querySelector('.header');
   var up = document.getElementById('to-top');
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
