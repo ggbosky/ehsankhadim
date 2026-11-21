@@ -8,344 +8,327 @@
 <meta name="description" content="Ehsan Khadim. Game developer and Blender artist based in Pakistan. Available for remote work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap">
 <style>
-  /* Layout: full-bleed expanded display name over an engine-viewport portrait,
-     then wide editorial rows. One dark world, single safety-orange accent. */
+  /* Layout: full-bleed hero over a live wireframe viewport, then centered
+     sections of soft cards, an amber stats band and a dark call-to-action. */
   :root {
-    --bg: #121212;
-    --surface: #1A1A1A;
-    --raise: #202020;
-    --border: #2E2E2E;
-    --text: #EDEDED;
-    --muted: #8A8A8A;
-    --accent: #FF5500;
-    --on-accent: #121212;
+    --bg: #FFFFFF;
+    --bg-alt: #F9FAFB;
+    --card: #FFFFFF;
+    --text: #111827;
+    --body: #4B5563;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --amber: #F59E0B;
+    --amber-dark: #D97706;
+    --amber-hi: #FBBF24;
+    --tint: #FEF3C7;
+    --tint-soft: #FFFBEB;
+    --tint-text: #B45309;
+    --navy: #111827;
+    --navy-text: #F9FAFB;
+    --shadow: 0 1px 2px rgba(17,24,39,.04), 0 8px 24px rgba(17,24,39,.06);
+    --shadow-lg: 0 2px 4px rgba(17,24,39,.05), 0 18px 40px rgba(17,24,39,.10);
 
-    --display: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
-    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
-
-    --wrap: 1240px;
-    --ease: cubic-bezier(.2, .7, .1, 1);
+    --font-head: "Montserrat", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Poppins", "Segoe UI", system-ui, sans-serif;
+    --radius: 14px;
+    --wrap: 1180px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0F141C; --bg-alt: #141A24; --card: #1A2130; --text: #F3F4F6; --body: #C4C9D2;
+      --muted: #9CA3AF; --border: #2A3342; --tint: rgba(245,158,11,.16); --tint-soft: rgba(245,158,11,.08);
+      --tint-text: #FBBF24; --navy: #0A0E14;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+      --shadow-lg: 0 2px 4px rgba(0,0,0,.3), 0 18px 40px rgba(0,0,0,.4);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0F141C; --bg-alt: #141A24; --card: #1A2130; --text: #F3F4F6; --body: #C4C9D2;
+    --muted: #9CA3AF; --border: #2A3342; --tint: rgba(245,158,11,.16); --tint-soft: rgba(245,158,11,.08);
+    --tint-text: #FBBF24; --navy: #0A0E14;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,.3), 0 18px 40px rgba(0,0,0,.4);
     color-scheme: dark;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 400 16px/1.6 var(--body);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    margin: 0; background: var(--bg); color: var(--body);
+    font: 400 16px/1.7 var(--font-body); -webkit-font-smoothing: antialiased;
   }
   body::before {
-    content: ""; position: fixed; inset: 0 0 auto;
-    height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg);
+    content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+    z-index: 60; background: var(--bg);
   }
   img { max-width: 100%; }
   a { color: inherit; }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  ::selection { background: var(--accent); color: var(--on-accent); }
+  h1, h2, h3 { font-family: var(--font-head); color: var(--text); margin: 0; text-wrap: balance; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  .icon { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   .wrap {
-    max-width: var(--wrap);
-    margin: 0 auto;
-    padding-left: max(24px, env(safe-area-inset-left, 0px));
-    padding-right: max(24px, env(safe-area-inset-right, 0px));
+    max-width: var(--wrap); margin: 0 auto;
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
   }
 
-  .eyebrow {
-    font: 500 11px/1.4 var(--mono);
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--muted);
+  /* ---------- Progress bar ---------- */
+  .progress {
+    position: fixed; top: env(safe-area-inset-top, 0px); left: 0; z-index: 70;
+    height: 3px; width: 100%; background: var(--amber);
+    transform-origin: 0 50%; transform: scaleX(0);
   }
 
   /* ---------- Buttons ---------- */
   .btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    height: 44px; padding: 0 18px;
-    border: 1px solid var(--border); border-radius: 0;
-    background: transparent; color: var(--text);
-    font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
-    text-decoration: none; cursor: pointer;
-    transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 46px; padding: 0 22px; border-radius: 10px; border: 2px solid transparent;
+    font: 600 15px/1 var(--font-body); text-decoration: none; cursor: pointer;
+    transition: background-color .2s, color .2s, border-color .2s, transform .2s, box-shadow .2s;
   }
-  .btn:hover { border-color: var(--text); }
-  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-  .btn-primary:hover { background: var(--text); border-color: var(--text); }
-  .btn .arrow { transition: transform .25s var(--ease); }
-  .btn:hover .arrow { transform: translateX(3px); }
-  .btn.is-copied { background: var(--text); border-color: var(--text); color: var(--on-accent); }
+  .btn .icon { font-size: 18px; }
+  .btn-primary { background: var(--amber); color: #fff; box-shadow: 0 6px 16px rgba(245,158,11,.35); }
+  .btn-primary:hover { background: var(--amber-dark); transform: translateY(-2px); }
+  .btn-light { background: #fff; color: #111827; }
+  .btn-light:hover { background: var(--tint); transform: translateY(-2px); }
+  .btn-ghost { border-color: rgba(255,255,255,.7); color: #fff; }
+  .btn-ghost:hover { background: rgba(255,255,255,.12); }
+  .btn.is-copied { background: #16A34A; color: #fff; box-shadow: none; }
 
-  /* ---------- Top bar ---------- */
-  .bar {
-    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-    background: rgba(18, 18, 18, .94);
-    border-bottom: 1px solid var(--border);
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 999px;
+    background: var(--tint); color: var(--tint-text); font: 500 14px/1.4 var(--font-body);
   }
-  .bar .wrap {
-    display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    height: 64px;
-  }
-  .mark {
-    font: 800 15px/1 var(--display); font-stretch: 125%;
-    letter-spacing: -.01em; text-transform: uppercase; text-decoration: none;
-  }
-  .mark span { color: var(--accent); }
-  .bar nav { display: flex; align-items: center; gap: 28px; }
-  .bar nav a {
-    font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase;
-    color: var(--muted); text-decoration: none; transition: color .2s;
-  }
-  .bar nav a:hover { color: var(--text); }
-  .bar .btn { height: 38px; padding: 0 14px; }
+  .badge-solid { background: var(--amber); color: #fff; font-weight: 600; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; position: relative; }
+  .dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #fff; animation: ping 1.6s ease-out infinite; }
+  @keyframes ping { to { transform: scale(2.6); opacity: 0; } }
 
-  /* ---------- Hero ---------- */
-  .hero { padding-block: clamp(48px, 7vw, 96px) clamp(56px, 8vw, 112px); position: relative; }
-  .hero::before {
-    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background-image:
-      linear-gradient(to right, rgba(237,237,237,.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(237,237,237,.035) 1px, transparent 1px);
-    background-size: 64px 64px;
-    -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
-            mask-image: linear-gradient(to bottom, #000 40%, transparent);
+  /* ---------- Header ---------- */
+  .header {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+    background: var(--bg); border-bottom: 1px solid var(--border);
   }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-    gap: clamp(32px, 5vw, 72px);
-    align-items: end;
+  .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 80px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .logo-mark {
+    width: 44px; height: 44px; border-radius: 12px; background: var(--amber); color: #fff;
+    display: grid; place-items: center; font-size: 24px;
   }
-  .status {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 8px 12px; border: 1px solid var(--border); background: var(--surface);
-    font: 500 11px/1 var(--mono); letter-spacing: .08em; color: var(--text);
+  .logo-text { font: 800 22px/1 var(--font-head); color: var(--text); letter-spacing: -.01em; }
+  .nav { display: flex; gap: 6px; }
+  .nav a {
+    position: relative; padding: 8px 12px; font: 500 16px/1 var(--font-body); color: var(--text);
+    text-decoration: none; transition: color .2s;
   }
-  .pulse { position: relative; width: 8px; height: 8px; background: var(--accent); flex: none; }
-  .pulse::after {
-    content: ""; position: absolute; inset: 0; background: var(--accent);
-    animation: ping 1.8s var(--ease) infinite;
+  .nav a::after {
+    content: ""; position: absolute; left: 12px; right: 12px; bottom: -6px; height: 2px;
+    background: var(--amber); transform: scaleX(0); transition: transform .25s;
   }
-  @keyframes ping { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(3); opacity: 0; } }
-
-  .name {
-    margin: 28px 0 0;
-    font: 850 clamp(52px, 9.2vw, 132px)/.86 var(--display);
-    font-stretch: 125%;
-    letter-spacing: -.035em;
-    text-transform: uppercase;
-  }
-  .name .line { display: block; overflow: hidden; padding-bottom: .04em; }
-  .name .line > span { display: block; animation: rise .9s var(--ease) both; }
-  .name .line:nth-child(2) > span { animation-delay: .08s; }
-  .name .dot { color: var(--accent); }
-  @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
-
-  .role {
-    display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 28px 0 0;
-    font: 500 13px/1.4 var(--mono); letter-spacing: .04em; color: var(--muted);
-  }
-  .role b { color: var(--text); font-weight: 500; }
-  .lede {
-    margin: 28px 0 0; max-width: 34ch;
-    font: 400 clamp(19px, 1.9vw, 24px)/1.45 var(--body);
-    letter-spacing: -.01em; color: var(--text);
-    text-wrap: pretty;
-  }
-  .lede em { font-style: normal; color: var(--muted); }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
-
-  /* Viewport-framed portrait */
-  .viewport { margin: 0; position: relative; }
-  .viewport-frame {
-    position: relative; border: 1px solid var(--border); background: var(--surface);
-    padding: 10px;
-  }
-  .viewport img {
-    display: block; width: 100%; height: auto; max-width: 100%;
-    aspect-ratio: 4 / 5; object-fit: cover;
-    filter: grayscale(100%) contrast(1.1);
-    transition: filter .6s var(--ease);
-  }
-  .viewport:hover img { filter: grayscale(0%) contrast(1.05); }
-  .corner { position: absolute; width: 18px; height: 18px; border: 0 solid var(--accent); pointer-events: none; }
-  .corner.tl { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
-  .corner.tr { top: -1px; right: -1px; border-top-width: 2px; border-right-width: 2px; }
-  .corner.bl { bottom: -1px; left: -1px; border-bottom-width: 2px; border-left-width: 2px; }
-  .corner.br { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
-  .hud {
-    position: absolute; left: 20px; right: 20px;
-    display: flex; justify-content: space-between; gap: 12px;
-    font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
-    color: var(--text); pointer-events: none;
-  }
-  .hud span { background: rgba(18,18,18,.78); padding: 5px 7px; }
-  .hud.top { top: 20px; }
-  .hud.bottom { bottom: 20px; }
-  .crosshair {
-    position: absolute; top: 50%; left: 50%; width: 22px; height: 22px;
-    transform: translate(-50%, -50%); pointer-events: none; opacity: .55;
-  }
-  .crosshair::before, .crosshair::after { content: ""; position: absolute; background: var(--text); }
-  .crosshair::before { left: 50%; top: 0; bottom: 0; width: 1px; }
-  .crosshair::after { top: 50%; left: 0; right: 0; height: 1px; }
-
-  /* ---------- Spec strip ---------- */
-  .spec { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--surface); }
-  .spec dl {
-    margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .spec dl > div { padding: 22px 24px; border-left: 1px solid var(--border); }
-  .spec dl > div:first-child { border-left: 0; padding-left: 0; }
-  .spec dt { margin-bottom: 8px; }
-  .spec dd { margin: 0; font: 600 15px/1.4 var(--body); font-variant-numeric: tabular-nums; }
-  .spec dd small { display: block; margin-top: 2px; font: 400 13px/1.45 var(--body); color: var(--muted); }
-
-  /* ---------- Sections ---------- */
-  .section { padding-block: clamp(72px, 9vw, 128px); border-bottom: 1px solid var(--border); }
-  .section-head {
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-    gap: clamp(24px, 5vw, 72px); align-items: end; margin-bottom: clamp(40px, 5vw, 64px);
-  }
-  .h2 {
-    margin: 12px 0 0;
-    font: 800 clamp(34px, 4.6vw, 64px)/.95 var(--display);
-    font-stretch: 112%; letter-spacing: -.03em; text-transform: uppercase;
-    text-wrap: balance;
-  }
-  .section-head p { margin: 0; max-width: 52ch; color: var(--muted); font-size: 17px; }
-
-  /* Currently building */
-  .build {
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-    border: 1px solid var(--border); background: var(--surface);
-  }
-  .build-info { padding: clamp(24px, 3vw, 40px); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 24px; }
-  .build-title {
-    margin: 0; font: 800 clamp(24px, 2.6vw, 34px)/1.05 var(--display); font-stretch: 112%;
-    letter-spacing: -.02em; text-transform: uppercase;
-  }
-  .build-info p { margin: 0; color: var(--muted); max-width: 46ch; }
-  .meta { margin: auto 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--border); }
-  .meta > div { padding-top: 16px; }
-  .meta dd { margin: 6px 0 0; font: 500 14px/1.3 var(--mono); }
-  .meta dd.live { color: var(--accent); }
-
-  .tasks { list-style: none; margin: 0; padding: 0; }
-  .tasks li {
-    display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 16px; align-items: start;
-    padding: 20px clamp(20px, 3vw, 32px); border-top: 1px solid var(--border);
+  .nav a:hover, .nav a.active { color: var(--amber); }
+  .nav a:hover::after, .nav a.active::after { transform: scaleX(1); }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .theme-toggle {
+    width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--bg-alt); color: var(--text); display: grid; place-items: center; font-size: 20px;
     transition: background-color .2s;
   }
-  .tasks li:first-child { border-top: 0; }
-  .tasks li:hover { background: var(--raise); }
-  .chip {
-    display: inline-block; padding: 5px 7px; border: 1px solid var(--border);
-    font: 700 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
-    text-align: center;
-  }
-  .chip.done { color: var(--text); border-color: #4A4A4A; }
-  .chip.wip { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
-  .tasks strong { display: block; font-weight: 600; }
-  .tasks span.desc { display: block; margin-top: 2px; color: var(--muted); font-size: 15px; }
-  .tasks li.is-done strong { color: var(--muted); }
-
-  /* Stack */
-  .stack { margin: 0; border-top: 1px solid var(--border); }
-  .stack > div {
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
-    gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border);
-    align-items: baseline;
-  }
-  .stack dt { font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .stack dd { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 28px; }
-  .stack dd span {
-    font: 700 clamp(20px, 2.3vw, 30px)/1.15 var(--display); font-stretch: 100%;
-    letter-spacing: -.02em; transition: color .2s;
-  }
-  .stack dd span:hover { color: var(--accent); }
-  .stack dd span small {
-    font: 400 12px/1 var(--mono); letter-spacing: .04em; color: var(--muted); margin-left: 6px;
-    vertical-align: middle;
+  .theme-toggle:hover { background: var(--tint); }
+  .theme-toggle .sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .sun { display: block; }
+  :root[data-theme="dark"] .theme-toggle .moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .sun { display: block; }
+    :root:not([data-theme="light"]) .theme-toggle .moon { display: none; }
   }
 
-  /* Remote work */
-  .work { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
-  .work article {
-    padding: clamp(24px, 3vw, 40px); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 14px; transition: background-color .2s;
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden; background: #0B0F16; color: #fff;
+    min-height: 640px; display: grid; place-items: center; text-align: center;
   }
-  .work article:hover { background: var(--surface); }
-  .work h3 {
-    margin: 0; font: 800 clamp(20px, 2vw, 26px)/1.1 var(--display); font-stretch: 112%;
-    letter-spacing: -.02em; text-transform: uppercase;
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(11,15,22,.35) 0%, rgba(11,15,22,.78) 75%);
   }
-  .work p { margin: 0; color: var(--muted); max-width: 44ch; }
-  .work code {
-    font: 500 12px/1.5 var(--mono); color: var(--text); background: var(--raise);
-    border: 1px solid var(--border); padding: 10px 12px; display: block; margin-top: auto;
-    overflow-x: auto; white-space: pre;
+  .hero-inner { position: relative; z-index: 1; padding-block: 96px; max-width: 860px; }
+  .hero h1 {
+    margin-top: 24px; color: #fff;
+    font: 800 clamp(38px, 6.2vw, 68px)/1.1 var(--font-head); letter-spacing: -.02em;
   }
-  .work code .c { color: var(--muted); }
-  .work code .k { color: var(--accent); }
+  .hero h1 .hl { color: var(--amber-hi); }
+  .hero p.sub {
+    margin: 22px auto 0; max-width: 640px; color: rgba(255,255,255,.88);
+    font-size: clamp(17px, 1.6vw, 20px); line-height: 1.6;
+  }
+  .hero .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 36px; }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; margin-top: 40px;
+    font-size: 14px; color: rgba(255,255,255,.7);
+  }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .hero-meta .icon { color: var(--amber-hi); font-size: 16px; }
 
-  /* Contact */
-  .contact { padding-block: clamp(80px, 10vw, 140px) 48px; }
-  .contact .big {
-    margin: 16px 0 0;
-    font: 850 clamp(40px, 7.4vw, 108px)/.9 var(--display); font-stretch: 125%;
-    letter-spacing: -.035em; text-transform: uppercase; text-wrap: balance;
+  /* ---------- Sections ---------- */
+  .section { padding-block: clamp(72px, 9vw, 112px); }
+  .section.alt { background: var(--bg-alt); }
+  .section-head { text-align: center; max-width: 680px; margin: 0 auto clamp(40px, 5vw, 60px); }
+  .section-head h2 { margin-top: 16px; font: 700 clamp(30px, 3.8vw, 42px)/1.2 var(--font-head); letter-spacing: -.015em; }
+  .section-head p { margin: 16px 0 0; font-size: 17px; }
+
+  .card {
+    background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: clamp(24px, 3vw, 36px); border: 1px solid var(--border);
+    transition: transform .25s, box-shadow .25s;
   }
-  .contact .big span { color: var(--accent); }
-  .mailbox {
-    margin-top: 40px; display: flex; flex-wrap: wrap; align-items: stretch;
-    border: 1px solid var(--border); max-width: 720px;
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .icon-circle {
+    width: 56px; height: 56px; border-radius: 50%; background: var(--tint); color: var(--amber-dark);
+    display: grid; place-items: center; font-size: 26px; flex: none;
   }
-  .mailbox .addr {
-    flex: 1 1 260px; min-width: 0; padding: 18px 20px;
-    font: 500 clamp(15px, 1.6vw, 19px)/1.3 var(--mono); user-select: all; overflow-wrap: anywhere;
-    display: flex; align-items: center;
+  :root[data-theme="dark"] .icon-circle { color: var(--amber-hi); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .icon-circle { color: var(--amber-hi); } }
+  .card-title { display: flex; align-items: center; gap: 16px; }
+  .card-title h3 { font: 700 22px/1.25 var(--font-head); }
+  .checks { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+  .checks li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; line-height: 1.55; }
+  .checks .icon { color: var(--amber); font-size: 20px; margin-top: 2px; }
+
+  /* About */
+  .about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 5vw, 64px); align-items: center; margin-bottom: clamp(40px, 5vw, 64px); }
+  .portrait { position: relative; margin: 0; }
+  .portrait img {
+    display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 20px; box-shadow: var(--shadow-lg);
   }
-  .mailbox .btn { height: auto; min-height: 60px; border-width: 0 0 0 1px; }
-  .mailbox .btn-primary { border-color: var(--accent); }
-  .elsewhere { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-  .foot {
-    margin-top: clamp(64px, 8vw, 112px); padding-top: 20px; border-top: 1px solid var(--border);
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
+  .portrait::before {
+    content: ""; position: absolute; inset: 18px -18px -18px 18px; border-radius: 20px;
+    background: var(--amber); z-index: -1;
   }
+  .portrait-tag {
+    position: absolute; left: -12px; bottom: 28px; display: flex; align-items: center; gap: 12px;
+    background: var(--card); color: var(--text); border-radius: 12px; padding: 12px 16px; box-shadow: var(--shadow-lg);
+    font: 600 14px/1.3 var(--font-body);
+  }
+  .portrait-tag small { display: block; font-weight: 400; color: var(--muted); }
+  .portrait-tag .icon-circle { width: 40px; height: 40px; font-size: 20px; }
+  .about-text h2 { margin-top: 16px; font: 700 clamp(28px, 3.4vw, 38px)/1.2 var(--font-head); }
+  .about-text p { margin: 18px 0 0; font-size: 17px; max-width: 58ch; }
+  .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 28px; }
+  .fact { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 12px; background: var(--bg-alt); border: 1px solid var(--border); }
+  .fact .icon-circle { width: 42px; height: 42px; font-size: 20px; }
+  .fact b { display: block; color: var(--text); font: 600 15px/1.3 var(--font-body); }
+  .fact span { font-size: 13px; color: var(--muted); }
+  .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+  .two .card p { margin: 18px 0 0; }
+
+  /* Approach box */
+  .approach {
+    max-width: 820px; margin: clamp(48px, 6vw, 72px) auto 0; text-align: center;
+    background: var(--tint-soft); border-radius: 18px; padding: clamp(32px, 4vw, 48px);
+  }
+  .approach .icon-circle { margin: 0 auto; }
+  .approach h3 { margin-top: 16px; font: 700 24px/1.3 var(--font-head); }
+  .approach p { margin: 14px auto 0; max-width: 60ch; font-size: 17px; }
+  .approach .btn { margin-top: 24px; }
+
+  /* Current build */
+  .build { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 28px; align-items: start; }
+  .build .card:hover { transform: none; }
+  .build h3 { font: 700 24px/1.3 var(--font-head); margin-top: 16px; }
+  .build-desc { margin: 14px 0 0; }
+  .build-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .pill { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 999px; background: var(--bg-alt); border: 1px solid var(--border); font-size: 14px; color: var(--text); }
+  .tasks { list-style: none; margin: 0; padding: 0; }
+  .tasks li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 16px 0; border-top: 1px solid var(--border); }
+  .tasks li:first-child { border-top: 0; padding-top: 0; }
+  .tasks li:last-child { padding-bottom: 0; }
+  .tasks .icon-circle { width: 40px; height: 40px; font-size: 19px; }
+  .tasks .t { color: var(--text); font-weight: 600; line-height: 1.35; }
+  .tasks .d { font-size: 14px; color: var(--muted); }
+  .state { padding: 4px 12px; border-radius: 999px; font: 600 12px/1.4 var(--font-body); white-space: nowrap; }
+  .state.done { background: #DCFCE7; color: #166534; }
+  .state.wip { background: var(--amber); color: #fff; }
+  .state.next { background: var(--bg-alt); color: var(--muted); border: 1px solid var(--border); }
+  .tasks li.is-wait .icon-circle { background: var(--bg-alt); color: var(--muted); }
+
+  /* Feature cards (stack / remote) */
+  .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .feature { text-align: center; }
+  .feature .icon-circle { margin: 0 auto; }
+  .feature h3 { margin-top: 20px; font: 700 20px/1.3 var(--font-head); }
+  .feature p { margin: 12px 0 0; font-size: 15px; }
+  .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 18px; }
+  .tags span { padding: 5px 12px; border-radius: 999px; background: var(--tint); color: var(--tint-text); font: 500 13px/1.4 var(--font-body); }
+
+  /* Stats band */
+  .stats { background: var(--amber); color: #fff; padding-block: clamp(48px, 6vw, 72px); }
+  .stats .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; text-align: center; }
+  .stat b { display: block; font: 800 clamp(34px, 4.2vw, 48px)/1.1 var(--font-head); font-variant-numeric: tabular-nums; }
+  .stat span { display: block; margin-top: 6px; font-size: 15px; color: rgba(255,255,255,.92); }
+
+  /* CTA */
+  .cta { background: var(--navy); color: var(--navy-text); text-align: center; padding-block: clamp(72px, 9vw, 104px); }
+  .cta h2 { color: #fff; font: 700 clamp(28px, 3.6vw, 40px)/1.2 var(--font-head); }
+  .cta p { margin: 18px auto 0; max-width: 560px; color: rgba(249,250,251,.8); font-size: 17px; }
+  .cta .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 32px; }
+  .email-box {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 10px 18px;
+    border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+    font-size: 16px; color: #fff; user-select: all; overflow-wrap: anywhere;
+  }
+  .email-box .icon { color: var(--amber-hi); }
+  .socials { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 28px; }
+  .socials a {
+    padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); color: rgba(255,255,255,.85);
+    font-size: 14px; text-decoration: none; transition: border-color .2s, color .2s;
+  }
+  .socials a:hover { border-color: var(--amber); color: var(--amber-hi); }
+  .footer { background: var(--navy); border-top: 1px solid rgba(255,255,255,.08); color: rgba(249,250,251,.6); font-size: 14px; }
+  .footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-block: 24px; }
+
+  /* Back to top */
+  .to-top {
+    position: fixed; z-index: 40;
+    right: calc(24px + env(safe-area-inset-right, 0px)); bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    width: 50px; height: 50px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--amber); color: #fff; font-size: 22px; display: grid; place-items: center;
+    box-shadow: 0 8px 20px rgba(245,158,11,.4);
+    opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .25s, transform .25s, background-color .2s;
+  }
+  .to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+  .to-top:hover { background: var(--amber-dark); }
 
   /* ---------- Responsive ---------- */
-  @media (max-width: 1000px) {
-    .spec dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .spec dl > div:nth-child(3) { border-left: 0; padding-left: 0; }
-    .spec dl > div:nth-child(n+3) { border-top: 1px solid var(--border); }
-    .bar nav a { display: none; }
+  @media (max-width: 1024px) {
+    .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .nav a { padding: 8px; font-size: 15px; }
   }
   @media (max-width: 850px) {
-    .wrap {
-      padding-left: max(16px, env(safe-area-inset-left, 0px));
-      padding-right: max(16px, env(safe-area-inset-right, 0px));
-    }
-    .hero-grid, .section-head, .build, .stack > div { grid-template-columns: minmax(0, 1fr); }
-    .viewport { max-width: 420px; order: -1; }
-    .build-info { border-right: 0; border-bottom: 1px solid var(--border); }
-    .stack > div { gap: 12px; }
-    .work { grid-template-columns: minmax(0, 1fr); }
+    .nav { display: none; }
+    .about, .two, .build { grid-template-columns: minmax(0, 1fr); }
+    .portrait { max-width: 380px; margin: 0 auto 12px; }
+    .stats .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 36px; }
+    .hero { min-height: 0; }
   }
   @media (max-width: 520px) {
-    .spec dl { grid-template-columns: minmax(0, 1fr); }
-    .spec dl > div { border-left: 0; padding-left: 0; }
-    .spec dl > div:nth-child(n+2) { border-top: 1px solid var(--border); }
-    .tasks li { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-    .tasks .chip { justify-self: start; }
-    .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .bar .btn .label-long { display: none; }
-    .mailbox .btn { flex: 1 1 100%; border-width: 1px 0 0 0; justify-content: center; }
+    .header .wrap { height: 68px; }
+    .header-actions .btn { padding: 0 14px; min-height: 42px; font-size: 14px; }
+    .theme-toggle { width: 42px; height: 42px; }
+    .logo-text { font-size: 19px; }
+    .grid-4, .facts { grid-template-columns: minmax(0, 1fr); }
+    .portrait::before { inset: 12px -10px -12px 12px; }
+    .portrait-tag { left: 8px; }
+    .tasks li { grid-template-columns: auto minmax(0, 1fr); }
+    .tasks .state { grid-column: 2; justify-self: start; }
+    .hero .actions .btn { width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -355,94 +338,167 @@
 </head>
 <body>
 
-<header class="bar">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gamepad" viewBox="0 0 24 24"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+</svg>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="header">
   <div class="wrap">
-    <a class="mark" href="#top">Ehsan Khadim<span>.</span></a>
-    <nav aria-label="Sections">
-      <a href="#building">Building</a>
-      <a href="#stack">Stack</a>
-      <a href="#remote">Remote</a>
+    <a class="logo" href="#home" aria-label="Ehsan Khadim, home">
+      <span class="logo-mark"><svg class="icon"><use href="#i-gamepad"/></svg></span>
+      <span class="logo-text">EK</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#building">Projects</a>
+      <a href="#stack">Skills</a>
+      <a href="#remote">How I Work</a>
       <a href="#contact">Contact</a>
-      <button type="button" class="btn btn-primary js-copy" id="copy-top">Copy<span class="label-long">&nbsp;email</span></button>
     </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="#contact">Hire Me</a>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon moon"><use href="#i-moon"/></svg>
+        <svg class="icon sun"><use href="#i-sun"/></svg>
+      </button>
+    </div>
   </div>
 </header>
 
-<main id="top">
+<main>
 
   <!-- ============ HERO ============ -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <p class="status" role="status"><span class="pulse" aria-hidden="true"></span>STATUS: AVAILABLE FOR REMOTE WORK</p>
-        <h1 class="name">
-          <span class="line"><span>Ehsan</span></span>
-          <span class="line"><span>Khadim<span class="dot">.</span></span></span>
-        </h1>
-        <p class="role"><b>Game Developer</b><b>Blender Artist</b><span>Pakistan &middot; UTC+5</span></p>
-        <p class="lede">I build small, playable games end to end: gameplay code, systems, and the 3D assets that go in them. <em>Prototype early, playtest often, cut what doesn't help.</em></p>
-        <div class="cta">
-          <a class="btn btn-primary" href="#building">See current build <span class="arrow" aria-hidden="true">&rarr;</span></a>
-          <a class="btn" href="#contact">Get in touch</a>
+  <section class="hero" id="home">
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="wrap hero-inner">
+      <span class="badge badge-solid"><span class="dot" aria-hidden="true"></span>Available for Remote Work</span>
+      <h1>Game Developer &amp; <span class="hl">Blender Artist</span></h1>
+      <p class="sub">I'm Ehsan Khadim. I write the gameplay code and model the 3D assets, so an idea goes from sketch to a playable build without waiting on a hand-off.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#building">See Current Build <svg class="icon"><use href="#i-right"/></svg></a>
+        <button type="button" class="btn btn-light js-copy"><svg class="icon"><use href="#i-copy"/></svg><span>Copy Email</span></button>
+      </div>
+      <div class="hero-meta">
+        <span><svg class="icon"><use href="#i-pin"/></svg>Pakistan</span>
+        <span><svg class="icon"><use href="#i-clock"/></svg>UTC+5 / PKT</span>
+        <span><svg class="icon"><use href="#i-gamepad"/></svg>Unity &middot; C# &middot; Blender</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="about">
+        <figure class="portrait">
+          <img src="profile.jpg" alt="Portrait of Ehsan Khadim" width="480" height="600">
+          <figcaption class="portrait-tag">
+            <span class="icon-circle"><svg class="icon"><use href="#i-clock"/></svg></span>
+            <span>UTC+5 / PKT<small>Overlap with EU &amp; US</small></span>
+          </figcaption>
+        </figure>
+        <div class="about-text">
+          <span class="badge">About Me</span>
+          <h2>Code and 3D art from one person</h2>
+          <p>I build small, playable games end to end: gameplay code, systems, and the 3D assets that go in them. Because I handle both sides, I can test a mechanic with real models instead of grey boxes.</p>
+          <p>I prototype early, test on real hardware, and cut features that don't make the game better.</p>
+          <div class="facts">
+            <div class="fact"><span class="icon-circle"><svg class="icon"><use href="#i-code"/></svg></span><div><b>Gameplay Code</b><span>C# systems &amp; controllers</span></div></div>
+            <div class="fact"><span class="icon-circle"><svg class="icon"><use href="#i-box"/></svg></span><div><b>3D Assets</b><span>Modeled in Blender</span></div></div>
+            <div class="fact"><span class="icon-circle"><svg class="icon"><use href="#i-pin"/></svg></span><div><b>Pakistan</b><span>Remote only</span></div></div>
+            <div class="fact"><span class="icon-circle"><svg class="icon"><use href="#i-chat"/></svg></span><div><b>Fluent English</b><span>Written &amp; spoken</span></div></div>
+          </div>
         </div>
       </div>
 
-      <figure class="viewport">
-        <div class="viewport-frame">
-          <img src="profile.jpg" alt="Portrait of Ehsan Khadim" width="480" height="600">
-          <span class="corner tl"></span><span class="corner tr"></span>
-          <span class="corner bl"></span><span class="corner br"></span>
-          <div class="hud top" aria-hidden="true"><span>Perspective</span><span>Lit</span></div>
-          <div class="crosshair" aria-hidden="true"></div>
-          <div class="hud bottom" aria-hidden="true"><span>Cam_01</span><span>4:5</span></div>
-        </div>
-      </figure>
+      <div class="two">
+        <article class="card">
+          <div class="card-title">
+            <span class="icon-circle"><svg class="icon"><use href="#i-target"/></svg></span>
+            <h3>What I Build</h3>
+          </div>
+          <p>Playable prototypes and game systems, with the assets to go with them.</p>
+          <ul class="checks">
+            <li><svg class="icon"><use href="#i-check"/></svg><span>Character controllers and movement that feel responsive on keyboard and gamepad</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg><span>Physics interactions: pushing, carrying, stacking</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg><span>Game-ready props with clean topology, LODs and correct scale</span></li>
+          </ul>
+        </article>
+        <article class="card">
+          <div class="card-title">
+            <span class="icon-circle"><svg class="icon"><use href="#i-eye"/></svg></span>
+            <h3>How I Approach It</h3>
+          </div>
+          <p>Short loops between building and testing.</p>
+          <ul class="checks">
+            <li><svg class="icon"><use href="#i-check"/></svg><span>Get a mechanic playable first, polish later</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg><span>Playtest often and tune by feel, not by spreadsheet</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg><span>Keep the Blender-to-engine pipeline consistent so assets drop in cleanly</span></li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="approach">
+        <span class="icon-circle"><svg class="icon"><use href="#i-bulb"/></svg></span>
+        <h3>Looking for a Developer Who Also Models?</h3>
+        <p>I'm open to remote roles and contract work on gameplay programming, prototyping and 3D asset production.</p>
+        <a class="btn btn-primary" href="#contact">Work With Me <svg class="icon"><use href="#i-right"/></svg></a>
+      </div>
     </div>
   </section>
 
-  <!-- ============ SPEC STRIP ============ -->
-  <section class="spec" aria-label="Quick facts">
-    <div class="wrap">
-      <dl>
-        <div><dt class="eyebrow">Role</dt><dd>Gameplay + 3D<small>Code and assets, one person</small></dd></div>
-        <div><dt class="eyebrow">Timezone</dt><dd>UTC+5 / PKT<small>Flexible overlap with EU &amp; US hours</small></dd></div>
-        <div><dt class="eyebrow">EU overlap</dt><dd>Full working day<small>09:00&ndash;18:00 CET = 13:00&ndash;22:00 PKT</small></dd></div>
-        <div><dt class="eyebrow">US East overlap</dt><dd>09:00&ndash;12:00 ET<small>= 19:00&ndash;22:00 PKT, later on request</small></dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <!-- ============ CURRENTLY BUILDING ============ -->
-  <section class="section" id="building">
+  <!-- ============ CURRENT BUILD ============ -->
+  <section class="section alt" id="building">
     <div class="wrap">
       <div class="section-head">
-        <div>
-          <p class="eyebrow">Dev log</p>
-          <h2 class="h2">Currently building</h2>
-        </div>
-        <p>No polished gallery here yet. This is what is on my desk right now, and where each piece stands.</p>
+        <span class="badge">Dev Log</span>
+        <h2>Currently Building</h2>
+        <p>No polished gallery yet. This is what I'm working on right now and where each part stands.</p>
       </div>
-
       <!-- REPLACE: describe the actual current prototype -->
-      <article class="build">
-        <div class="build-info">
-          <p class="eyebrow">Project</p>
-          <h3 class="build-title">Third-person physics prototype</h3>
-          <p>A character controller that feels responsive on keyboard and gamepad, plus a small set of objects the player can push, carry and stack without the physics falling apart.</p>
-          <dl class="meta">
-            <div><dt class="eyebrow">Build</dt><dd>0.3.x</dd></div>
-            <div><dt class="eyebrow">State</dt><dd class="live">Prototype</dd></div>
-            <div><dt class="eyebrow">Updated</dt><dd>Nov 2026</dd></div>
-          </dl>
-        </div>
-        <ul class="tasks">
-          <li class="is-done"><span class="chip done">Done</span><div><strong>Character controller</strong><span class="desc">Coyote time, jump buffering, slope handling.</span></div></li>
-          <li class="is-done"><span class="chip done">Done</span><div><strong>Blender-to-engine pipeline</strong><span class="desc">Modular props, LODs, consistent scale and pivot conventions.</span></div></li>
-          <li><span class="chip wip">WIP</span><div><strong>Grab and carry system</strong><span class="desc">Weight-based movement penalties while holding objects.</span></div></li>
-          <li><span class="chip wip">WIP</span><div><strong>Camera collision</strong><span class="desc">Framing that holds up in tight interior spaces.</span></div></li>
-          <li><span class="chip">Next</span><div><strong>Graybox level + playtest</strong><span class="desc">A short test round to tune game feel.</span></div></li>
-        </ul>
-      </article>
+      <div class="build">
+        <article class="card">
+          <span class="icon-circle"><svg class="icon"><use href="#i-gamepad"/></svg></span>
+          <h3>Third-Person Physics Prototype</h3>
+          <p class="build-desc">A character controller that feels responsive on keyboard and gamepad, plus a set of objects the player can push, carry and stack without the physics falling apart.</p>
+          <div class="build-meta">
+            <span class="pill">Build 0.3.x</span>
+            <span class="pill">Prototype</span>
+            <span class="pill">Updated Nov 2026</span>
+          </div>
+        </article>
+        <article class="card">
+          <ul class="tasks">
+            <li><span class="icon-circle"><svg class="icon"><use href="#i-check"/></svg></span><div><div class="t">Character controller</div><div class="d">Coyote time, jump buffering, slope handling</div></div><span class="state done">Done</span></li>
+            <li><span class="icon-circle"><svg class="icon"><use href="#i-check"/></svg></span><div><div class="t">Blender-to-engine pipeline</div><div class="d">Modular props, LODs, scale and pivot conventions</div></div><span class="state done">Done</span></li>
+            <li><span class="icon-circle"><svg class="icon"><use href="#i-wrench"/></svg></span><div><div class="t">Grab and carry system</div><div class="d">Weight-based movement penalties</div></div><span class="state wip">In Progress</span></li>
+            <li><span class="icon-circle"><svg class="icon"><use href="#i-wrench"/></svg></span><div><div class="t">Camera collision</div><div class="d">Framing in tight interior spaces</div></div><span class="state wip">In Progress</span></li>
+            <li class="is-wait"><span class="icon-circle"><svg class="icon"><use href="#i-clock"/></svg></span><div><div class="t">Graybox level + playtest</div><div class="d">A short test round to tune game feel</div></div><span class="state next">Next</span></li>
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -450,146 +506,241 @@
   <section class="section" id="stack">
     <div class="wrap">
       <div class="section-head">
-        <div>
-          <p class="eyebrow">Tools of the trade</p>
-          <h2 class="h2">Technical stack</h2>
-        </div>
-        <p>What I use day to day, from first blockout to a build you can play.</p>
+        <span class="badge">Skills</span>
+        <h2>Technical Stack</h2>
+        <p>The tools I use day to day, from first blockout to a build you can play.</p>
       </div>
       <!-- REPLACE: adjust to the exact tools used -->
-      <dl class="stack">
-        <div><dt>Engine</dt><dd><span>Unity</span><span>Unreal Engine<small>working knowledge</small></span></dd></div>
-        <div><dt>Languages</dt><dd><span>C#</span><span>C++</span><span>Python<small>Blender scripting</small></span></dd></div>
-        <div><dt>Tools</dt><dd><span>Blender</span><span>Substance Painter</span><span>Git + LFS</span><span>Rider</span></dd></div>
-        <div><dt>Focus areas</dt><dd><span>Gameplay programming</span><span>Character controllers</span><span>Hard-surface modeling</span><span>Asset optimization</span></dd></div>
-      </dl>
+      <div class="grid-4">
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-gamepad"/></svg></span>
+          <h3>Engine</h3>
+          <p>Where the gameplay lives.</p>
+          <div class="tags"><span>Unity</span><span>Unreal (basics)</span></div>
+        </article>
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-code"/></svg></span>
+          <h3>Languages</h3>
+          <p>Gameplay code and tool scripts.</p>
+          <div class="tags"><span>C#</span><span>C++</span><span>Python</span></div>
+        </article>
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-box"/></svg></span>
+          <h3>Tools</h3>
+          <p>Modeling, texturing and versioning.</p>
+          <div class="tags"><span>Blender</span><span>Substance Painter</span><span>Git + LFS</span></div>
+        </article>
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-layers"/></svg></span>
+          <h3>Focus Areas</h3>
+          <p>What I spend most time on.</p>
+          <div class="tags"><span>Gameplay</span><span>Controllers</span><span>Hard-surface</span><span>Optimization</span></div>
+        </article>
+      </div>
     </div>
   </section>
 
   <!-- ============ REMOTE ============ -->
-  <section class="section" id="remote">
+  <section class="section alt" id="remote">
     <div class="wrap">
       <div class="section-head">
-        <div>
-          <p class="eyebrow">Working together</p>
-          <h2 class="h2">How I work remotely</h2>
-        </div>
+        <span class="badge">Remote Work</span>
+        <h2>How I Work</h2>
         <p>You should always know what I'm doing without having to ask.</p>
       </div>
-      <div class="work">
-        <article>
-          <p class="eyebrow">Async</p>
-          <h3>Daily written updates</h3>
-          <p>End of each day: what changed, what is blocked, what is next. No need to be online at the same time to stay in sync.</p>
-          <code><span class="c"># daily.md</span>
-<span class="k">done:</span>  carry system, weight curve
-<span class="k">next:</span>  camera collision pass</code>
+      <div class="grid-4">
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-clock"/></svg></span>
+          <h3>Async Updates</h3>
+          <p>A written update at the end of each day: what changed, what's blocked, what's next.</p>
         </article>
-        <article>
-          <p class="eyebrow">Version control</p>
-          <h3>Git discipline</h3>
-          <p>Small, descriptive commits, feature branches and pull requests. Large binary assets handled with Git LFS.</p>
-          <code><span class="k">git</span> commit -m "Add coyote time to jump"</code>
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-git"/></svg></span>
+          <h3>Git Discipline</h3>
+          <p>Small, descriptive commits, feature branches and pull requests. Binary assets in Git LFS.</p>
         </article>
-        <article>
-          <p class="eyebrow">Documentation</p>
-          <h3>Clear handover</h3>
-          <p>Readable code, a short README per system, and notes on asset naming and import settings so anyone can pick it up.</p>
-          <code>SM_Crate_01_LOD0.fbx  <span class="c">// mesh_name_variant_lod</span></code>
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-file"/></svg></span>
+          <h3>Clear Docs</h3>
+          <p>Readable code, a short README per system, and asset naming notes anyone can follow.</p>
         </article>
-        <article>
-          <p class="eyebrow">Communication</p>
+        <article class="card feature">
+          <span class="icon-circle"><svg class="icon"><use href="#i-chat"/></svg></span>
           <h3>Fluent English</h3>
-          <p>Comfortable with written specs, code review comments and video calls. I ask questions early instead of guessing.</p>
-          <code><span class="c">// overlap</span>  EU full day &middot; US East mornings</code>
+          <p>Comfortable with specs, code review and calls. I ask questions early instead of guessing.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- ============ CONTACT ============ -->
-  <section class="contact" id="contact">
+  <!-- ============ STATS ============ -->
+  <section class="stats" aria-label="Availability in numbers">
     <div class="wrap">
-      <p class="eyebrow">Contact</p>
-      <h2 class="big">Open to remote roles and contract work<span>.</span></h2>
-
-      <!-- REPLACE: set the real address in both places below -->
-      <div class="mailbox">
-        <span class="addr" id="email-text">ehsan.khadim@example.com</span>
-        <button type="button" class="btn btn-primary js-copy" id="copy-main">Copy email</button>
-        <a class="btn" href="mailto:ehsan.khadim@example.com">Write <span class="arrow" aria-hidden="true">&rarr;</span></a>
-      </div>
-
-      <!-- REPLACE: point these at real profiles -->
-      <div class="elsewhere">
-        <a class="btn" href="https://github.com/" target="_blank" rel="noopener">GitHub &nearr;</a>
-        <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn &nearr;</a>
-        <a class="btn" href="https://www.artstation.com/" target="_blank" rel="noopener">ArtStation &nearr;</a>
-        <a class="btn" href="https://itch.io/" target="_blank" rel="noopener">itch.io &nearr;</a>
-      </div>
-
-      <footer class="foot">
-        <span class="eyebrow">&copy; <span id="year">2026</span> Ehsan Khadim</span>
-        <span class="eyebrow">Pakistan &middot; UTC+5</span>
-      </footer>
+      <div class="stat"><b>UTC+5</b><span>Pakistan Time</span></div>
+      <div class="stat"><b>8 h</b><span>Daily overlap with EU</span></div>
+      <div class="stat"><b>3 h</b><span>Daily overlap with US East</span></div>
+      <div class="stat"><b>2-in-1</b><span>Gameplay code + 3D art</span></div>
     </div>
   </section>
 
+  <!-- ============ CTA ============ -->
+  <section class="cta" id="contact">
+    <div class="wrap">
+      <h2>Ready to Start Your Game Project?</h2>
+      <p>I'm available for remote roles and contract work. Send a short note about the project and what you need.</p>
+      <div class="actions">
+        <button type="button" class="btn btn-primary js-copy"><svg class="icon"><use href="#i-copy"/></svg><span>Copy Email</span></button>
+        <a class="btn btn-ghost" href="mailto:ehsan.khadim@example.com"><svg class="icon"><use href="#i-mail"/></svg>Write an Email</a>
+      </div>
+      <!-- REPLACE: set the real address here and in the mailto link above -->
+      <div><span class="email-box"><svg class="icon"><use href="#i-mail"/></svg><span id="email-text">ehsan.khadim@example.com</span></span></div>
+      <!-- REPLACE: point these at real profiles -->
+      <div class="socials">
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.artstation.com/" target="_blank" rel="noopener">ArtStation</a>
+        <a href="https://itch.io/" target="_blank" rel="noopener">itch.io</a>
+      </div>
+    </div>
+  </section>
 </main>
 
+<footer class="footer">
+  <div class="wrap">
+    <span>&copy; <span id="year">2026</span> Ehsan Khadim. All rights reserved.</span>
+    <span>Game Developer &amp; Blender Artist &middot; Pakistan</span>
+  </div>
+</footer>
+
+<button type="button" class="to-top" id="to-top" aria-label="Back to top"><svg class="icon"><use href="#i-up"/></svg></button>
+
 <script>
-  (function () {
-    var EMAIL = document.getElementById('email-text').textContent.trim();
-    var year = document.getElementById('year');
-    if (year) year.textContent = new Date().getFullYear();
+(function () {
+  var root = document.documentElement;
+  var EMAIL = document.getElementById('email-text').textContent.trim();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    function selectEmail() {
-      var el = document.getElementById('email-text');
-      var range = document.createRange();
-      range.selectNodeContents(el);
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
+  /* Theme toggle */
+  try { var saved = localStorage.getItem('ek-theme'); if (saved) root.setAttribute('data-theme', saved); } catch (e) {}
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('ek-theme', next); } catch (e) {}
+  });
+
+  /* Copy email */
+  function legacyCopy() {
+    var ta = document.createElement('textarea');
+    ta.value = EMAIL; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta); return ok;
+  }
+  function selectEmail() {
+    var r = document.createRange(); r.selectNodeContents(document.getElementById('email-text'));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  }
+  document.querySelectorAll('.js-copy').forEach(function (btn) {
+    var label = btn.querySelector('span'), text = label.textContent, t;
+    function show(ok) {
+      label.textContent = ok ? 'Copied!' : 'Select & copy below';
+      btn.classList.toggle('is-copied', ok);
+      if (!ok) selectEmail();
+      clearTimeout(t);
+      t = setTimeout(function () { label.textContent = text; btn.classList.remove('is-copied'); }, 2000);
     }
-
-    function legacyCopy() {
-      var ta = document.createElement('textarea');
-      ta.value = EMAIL;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      var ok = false;
-      try { ok = document.execCommand('copy'); } catch (e) {}
-      document.body.removeChild(ta);
-      return ok;
-    }
-
-    document.querySelectorAll('.js-copy').forEach(function (btn) {
-      var original = btn.innerHTML;
-      var timer;
-      function show(ok) {
-        btn.textContent = ok ? 'Copied' : 'Select + copy';
-        btn.classList.toggle('is-copied', ok);
-        if (!ok) selectEmail();
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          btn.innerHTML = original;
-          btn.classList.remove('is-copied');
-        }, 1800);
-      }
-      btn.addEventListener('click', function () {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(EMAIL)
-            .then(function () { show(true); })
-            .catch(function () { show(legacyCopy()); });
-        } else {
-          show(legacyCopy());
-        }
-      });
+    btn.addEventListener('click', function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(EMAIL).then(function () { show(true); }, function () { show(legacyCopy()); });
+      } else { show(legacyCopy()); }
     });
-  })();
+  });
+
+  /* Scroll progress, back to top, active nav */
+  var bar = document.getElementById('progress'), up = document.getElementById('to-top');
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var y = window.scrollY;
+    bar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
+    up.classList.toggle('show', y > 500);
+    var idx = 0;
+    sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < 140) idx = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  up.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  /* Hero: wireframe viewport scene */
+  var canvas = document.getElementById('scene'), ctx = canvas.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H, DPR;
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  var cubeV = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
+  var cubeE = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+  var objs = [
+    { x: -0.34, y: 0.30, s: 54, sp: 0.5, ph: 0 },
+    { x: 0.36, y: 0.26, s: 40, sp: -0.7, ph: 1.4 },
+    { x: 0.24, y: 0.74, s: 30, sp: 0.9, ph: 2.2 },
+    { x: -0.28, y: 0.76, s: 24, sp: -1.1, ph: 3.1 }
+  ];
+  function drawCube(o, t) {
+    var a = t * o.sp + o.ph, b = a * 0.7;
+    var ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b);
+    var cx = W / 2 + o.x * W, cy = o.y * H + Math.sin(t + o.ph) * 8;
+    var p = cubeV.map(function (v) {
+      var x = v[0] * ca - v[2] * sa, z = v[0] * sa + v[2] * ca;
+      var y = v[1] * cb - z * sb; z = v[1] * sb + z * cb;
+      var k = 4 / (4 + z);
+      return [cx + x * o.s * k, cy + y * o.s * k];
+    });
+    ctx.strokeStyle = 'rgba(251,191,36,.55)'; ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    cubeE.forEach(function (e) { ctx.moveTo(p[e[0]][0], p[e[0]][1]); ctx.lineTo(p[e[1]][0], p[e[1]][1]); });
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(251,191,36,.8)';
+    p.forEach(function (q) { ctx.fillRect(q[0] - 1.5, q[1] - 1.5, 3, 3); });
+  }
+  function frame(ms) {
+    var t = ms / 1000;
+    ctx.clearRect(0, 0, W, H);
+    var hor = H * 0.48, vx = W / 2;
+    /* floor grid */
+    ctx.lineWidth = 1;
+    for (var i = -24; i <= 24; i++) {
+      ctx.strokeStyle = i === 0 ? 'rgba(245,158,11,.45)' : 'rgba(255,255,255,.10)';
+      ctx.beginPath(); ctx.moveTo(vx, hor); ctx.lineTo(vx + i * W * 0.09, H); ctx.stroke();
+    }
+    var off = (t * 0.35) % 1;
+    for (var j = 0; j < 22; j++) {
+      var z = j + 1 - off, y = hor + (H - hor) * (1 / z) * 0.9;
+      if (y > H || y < hor) continue;
+      var a = Math.min(1, (y - hor) / (H - hor) * 1.6) * 0.22;
+      ctx.strokeStyle = 'rgba(255,255,255,' + a + ')';
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+    /* ceiling grid, mirrored and fainter */
+    for (var k = -24; k <= 24; k++) {
+      ctx.strokeStyle = 'rgba(255,255,255,.05)';
+      ctx.beginPath(); ctx.moveTo(vx, hor); ctx.lineTo(vx + k * W * 0.09, 0); ctx.stroke();
+    }
+    objs.forEach(function (o) { drawCube(o, t); });
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  resize();
+  window.addEventListener('resize', function () { resize(); if (reduce) frame(0); });
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
