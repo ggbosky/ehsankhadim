@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ehsan Khadim — Game Developer / Blender Artist</title>
+  <meta name="description" content="Ehsan Khadim. Game developer and Blender artist based in Pakistan. Available for remote work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #121212;
+      --surface: #1A1A1A;
+      --border: #2E2E2E;
+      --line: 1px solid var(--border);
+      --text: #EDEDED;
+      --muted: #8A8A8A;
+      --accent: #FF5500;
+
+      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+      --radius: 0px;
+      --gutter: clamp(20px, 4vw, 56px);
+      --measure: 66ch;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: var(--border);
+      text-underline-offset: 3px;
+      transition: color 120ms linear, text-decoration-color 120ms linear;
+    }
+    a:hover, a:focus-visible {
+      color: var(--accent);
+      text-decoration-color: var(--accent);
+    }
+
+    :focus-visible {
+      outline: 1px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .mono { font-family: var(--font-mono); }
+
+    /* ---------- Page frame ---------- */
+    .sheet {
+      max-width: 1320px;
+      margin: 0 auto;
+      border-left: var(--line);
+      border-right: var(--line);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px var(--gutter);
+      border-bottom: var(--line);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .topbar span:last-child { text-align: right; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 35% 65%;
+    }
+
+    /* ---------- Sidebar ---------- */
+    .sidebar {
+      border-right: var(--line);
+    }
+    .sidebar-inner {
+      position: sticky;
+      top: 0;
+      padding: var(--gutter);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .portrait {
+      margin: 0;
+      border: var(--line);
+      background: var(--surface);
+      padding: 8px;
+    }
+    .portrait img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+    }
+    .portrait figcaption {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .identity h1 {
+      margin: 0 0 6px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: clamp(26px, 2.6vw, 34px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .identity .role {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border: var(--line);
+      background: var(--surface);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      align-self: flex-start;
+    }
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      flex: none;
+      animation: blink 2.4s steps(1, end) infinite;
+    }
+    @keyframes blink {
+      0%, 70% { opacity: 1; }
+      70.01%, 100% { opacity: 0.25; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .status-dot { animation: none; }
+    }
+
+    /* Inspector-style key/value table */
+    .props {
+      margin: 0;
+      border-top: var(--line);
+      font-size: 13px;
+    }
+    .props div {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 12px;
+      padding: 9px 0;
+      border-bottom: var(--line);
+    }
+    .props dt {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding-top: 2px;
+    }
+    .props dd { margin: 0; }
+    .props dd small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .email-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 12px;
+    }
+    .email-row a { word-break: break-all; }
+
+    .btn-copy {
+      appearance: none;
+      border: var(--line);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      cursor: pointer;
+      transition: border-color 120ms linear, color 120ms linear;
+    }
+    .btn-copy:hover { border-color: var(--text); }
+    .btn-copy.is-copied {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .links a::after { content: " \2197"; color: var(--muted); }
+
+    /* ---------- Main column ---------- */
+    .main { min-width: 0; }
+
+    .block {
+      padding: var(--gutter);
+      border-bottom: var(--line);
+    }
+    .block:last-child { border-bottom: 0; }
+
+    .block-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin: 0 0 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .block-head .idx { color: var(--text); }
+    .block-head::after {
+      content: "";
+      flex: 1;
+      border-top: var(--line);
+      transform: translateY(-3px);
+    }
+
+    .intro p {
+      margin: 0;
+      max-width: var(--measure);
+      font-size: clamp(18px, 1.7vw, 22px);
+      line-height: 1.5;
+      letter-spacing: -0.005em;
+    }
+    .intro p + p { margin-top: 0.9em; }
+    .intro .muted { color: var(--muted); }
+
+    /* Log entry */
+    .log {
+      border: var(--line);
+      background: var(--surface);
+    }
+    .log-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 24px;
+      padding: 12px 16px;
+      border-bottom: var(--line);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .log-header strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .log-body { padding: 18px 16px 20px; }
+    .log-body > p {
+      margin: 0 0 18px;
+      max-width: var(--measure);
+    }
+
+    .entries {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .entries li {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 12px;
+      padding: 8px 0;
+      border-top: var(--line);
+    }
+    .entries li:first-child { border-top: 0; }
+    .tag { color: var(--muted); }
+    .tag.done { color: var(--text); }
+    .tag.wip { color: var(--accent); }
+
+    .log-footer {
+      padding: 10px 16px;
+      border-top: var(--line);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Stack rows */
+    .stack { margin: 0; }
+    .stack div {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 24px;
+      padding: 16px 0;
+      border-top: var(--line);
+    }
+    .stack div:last-child { border-bottom: var(--line); }
+    .stack dt {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+    .stack dd { margin: 0; }
+    .stack dd span:not(:last-child)::after {
+      content: " / ";
+      color: var(--border);
+      white-space: pre;
+    }
+
+    /* Work list */
+    .work {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      counter-reset: w;
+      max-width: var(--measure);
+    }
+    .work li {
+      counter-increment: w;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      padding: 14px 0;
+      border-top: var(--line);
+    }
+    .work li:last-child { border-bottom: var(--line); }
+    .work li::before {
+      content: counter(w, decimal-leading-zero);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      padding-top: 3px;
+    }
+    .work strong { font-weight: 600; }
+    .work p { margin: 2px 0 0; color: var(--muted); }
+
+    .colophon {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 24px;
+      padding: 14px var(--gutter);
+      border-top: var(--line);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0);
+      white-space: nowrap; border: 0;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 1100px) {
+      .stack div { grid-template-columns: 120px 1fr; gap: 16px; }
+    }
+
+    @media (max-width: 850px) {
+      :root { --gutter: 16px; }
+      .sheet { border-left: 0; border-right: 0; }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { border-right: 0; border-bottom: var(--line); }
+      .sidebar-inner { position: static; }
+      .portrait { max-width: 320px; }
+      .topbar span:last-child { display: none; }
+      .stack div { grid-template-columns: 1fr; gap: 4px; }
+      .entries li { grid-template-columns: 56px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+
+    <div class="topbar" aria-hidden="true">
+      <span>ehsan_khadim.sheet</span>
+      <span>Rev. 2026.11 &middot; PK &middot; UTC+5</span>
+    </div>
+
+    <div class="layout">
+
+      <!-- ===================== SIDEBAR ===================== -->
+      <aside class="sidebar" aria-label="Profile and contact">
+        <div class="sidebar-inner">
+
+          <figure class="portrait">
+            <img src="profile.jpg" alt="Portrait of Ehsan Khadim" width="480" height="600">
+            <figcaption><span>IMG_001</span><span>4:5</span></figcaption>
+          </figure>
+
+          <header class="identity">
+            <h1>Ehsan Khadim</h1>
+            <p class="role">Game Developer | Blender Artist</p>
+          </header>
+
+          <p class="status" role="status">
+            <span class="status-dot" aria-hidden="true"></span>
+            [STATUS: AVAILABLE FOR REMOTE WORK]
+          </p>
+
+          <dl class="props">
+            <div>
+              <dt>Location</dt>
+              <dd>Pakistan</dd>
+            </div>
+            <div>
+              <dt>Timezone</dt>
+              <dd>UTC+5 / PKT <small>Flexible overlap with EU &amp; US hours</small></dd>
+            </div>
+            <div>
+              <dt>Email</dt>
+              <dd class="email-row">
+                <!-- REPLACE: set the real address here and in data-email below -->
+                <a id="email-link" href="mailto:ehsan.khadim@example.com">ehsan.khadim@example.com</a>
+                <button type="button" class="btn-copy" id="copy-email" data-email="ehsan.khadim@example.com">Copy</button>
+              </dd>
+            </div>
+          </dl>
+
+          <nav aria-label="Elsewhere">
+            <!-- REPLACE: point these at real profiles -->
+            <ul class="links">
+              <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/" rel="noopener">LinkedIn</a></li>
+              <li><a href="https://www.artstation.com/" rel="noopener">ArtStation</a></li>
+              <li><a href="https://itch.io/" rel="noopener">itch.io</a></li>
+            </ul>
+          </nav>
+
+        </div>
+      </aside>
+
+      <!-- ===================== MAIN ===================== -->
+      <main class="main">
+
+        <section class="block intro" aria-labelledby="h-intro">
+          <h2 class="block-head" id="h-intro"><span class="idx">00</span> Overview</h2>
+          <p>I build small, playable games end to end: gameplay code, systems, and the 3D assets that go in them.</p>
+          <p>Because I model in Blender and program the engine side myself, I can take a mechanic from a sketch to a working in-engine build without waiting on a hand-off.</p>
+          <p class="muted">I prototype early, test on real hardware, and cut features that don't make the game better. Short builds and honest playtests over long design documents.</p>
+        </section>
+
+        <section class="block" aria-labelledby="h-current">
+          <h2 class="block-head" id="h-current"><span class="idx">01</span> Currently Building</h2>
+
+          <!-- REPLACE: describe the actual current prototype -->
+          <article class="log">
+            <header class="log-header">
+              <span><strong>PROJECT:</strong> untitled_physics_prototype</span>
+              <span><strong>BUILD:</strong> 0.3.x &middot; <strong>STATE:</strong> prototype</span>
+            </header>
+            <div class="log-body">
+              <p>A third-person movement and physics-interaction prototype. The goal is a character controller that feels responsive on keyboard and gamepad, and a small set of objects the player can push, carry and stack without the physics falling apart.</p>
+              <ul class="entries">
+                <li><span class="tag done">[DONE]</span><span>Character controller with coyote time, jump buffering and slope handling.</span></li>
+                <li><span class="tag done">[DONE]</span><span>Blender-to-engine pipeline: modular props, LODs, consistent scale and pivot conventions.</span></li>
+                <li><span class="tag wip">[WIP]</span><span>Grab / carry system with weight-based movement penalties.</span></li>
+                <li><span class="tag wip">[WIP]</span><span>Camera collision and framing in tight interior spaces.</span></li>
+                <li><span class="tag">[NEXT]</span><span>Graybox test level and a short playtest round to tune feel.</span></li>
+              </ul>
+            </div>
+            <footer class="log-footer">Last updated: November 2026</footer>
+          </article>
+        </section>
+
+        <section class="block" aria-labelledby="h-stack">
+          <h2 class="block-head" id="h-stack"><span class="idx">02</span> Technical Stack</h2>
+          <!-- REPLACE: adjust to the exact tools used -->
+          <dl class="stack">
+            <div>
+              <dt>Engine</dt>
+              <dd><span>Unity</span><span>Unreal Engine (working knowledge)</span></dd>
+            </div>
+            <div>
+              <dt>Languages</dt>
+              <dd><span>C#</span><span>C++</span><span>Python (Blender scripting)</span></dd>
+            </div>
+            <div>
+              <dt>Tools</dt>
+              <dd><span>Blender</span><span>Substance Painter</span><span>Git</span><span>Visual Studio / Rider</span></dd>
+            </div>
+            <div>
+              <dt>Focus Areas</dt>
+              <dd><span>Gameplay programming</span><span>Character controllers</span><span>Hard-surface &amp; prop modeling</span><span>Asset optimization</span></dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="block" aria-labelledby="h-remote">
+          <h2 class="block-head" id="h-remote"><span class="idx">03</span> How I Work (Remote)</h2>
+          <ol class="work">
+            <li>
+              <div>
+                <strong>Async by default.</strong>
+                <p>Written updates at the end of each working day: what changed, what's blocked, what's next. No need to be online at the same time to stay in sync.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Version control discipline.</strong>
+                <p>Git with small, descriptive commits, feature branches and pull requests. Large binary assets handled with Git LFS.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Clear documentation.</strong>
+                <p>Readable code, short READMEs for each system, and notes on asset naming and import settings so the next person can pick things up.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <strong>Fluent English communication.</strong>
+                <p>Comfortable with written specs, code review comments and video calls. I ask questions early instead of guessing.</p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="colophon">
+      <span>&copy; <span id="year">2026</span> Ehsan Khadim</span>
+      <span>Set in Inter &amp; JetBrains Mono</span>
+    </footer>
+
+  </div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById('copy-email');
+      var year = document.getElementById('year');
+      if (year) year.textContent = new Date().getFullYear();
+      if (!btn) return;
+
+      var label = btn.textContent;
+      var timer;
+
+      function fallbackCopy(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+
+      function feedback(text, ok) {
+        btn.textContent = text;
+        btn.classList.toggle('is-copied', ok);
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.textContent = label;
+          btn.classList.remove('is-copied');
+        }, 1800);
+      }
+
+      btn.addEventListener('click', function () {
+        var email = btn.getAttribute('data-email');
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(email)
+            .then(function () { feedback('Copied', true); })
+            .catch(function () { var ok = fallbackCopy(email); feedback(ok ? 'Copied' : 'Failed', ok); });
+        } else {
+          var ok = fallbackCopy(email); feedback(ok ? 'Copied' : 'Failed', ok);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
