@@ -114,8 +114,9 @@
   /* ---------- Header ---------- */
   .header {
     position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
-    background: var(--bg); border-bottom: 1px solid var(--border);
+    background: var(--bg); transition: box-shadow .2s;
   }
+  .header.scrolled { box-shadow: 0 1px 0 var(--border), 0 6px 20px rgba(0,0,0,.12); }
   .header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 80px; }
   .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .logo-mark { width: 40px; height: 40px; flex: none; transition: transform .4s cubic-bezier(.2,.7,.1,1); }
@@ -137,16 +138,11 @@
   .header-actions { display: flex; align-items: center; gap: 12px; }
   /* ---------- Hero ---------- */
   .hero {
-    position: relative; overflow: hidden; background: #0B0F16; color: #fff;
+    position: relative; overflow: hidden; background: #0F141C; color: #fff;
     min-height: max(720px, calc(100svh - 80px)); display: grid; place-items: center; text-align: center;
   }
   .pixel { font-family: "Press Start 2P", "Courier New", monospace; font-weight: 400; letter-spacing: 0; }
 
-  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .hero::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(ellipse at center, rgba(11,15,22,.35) 0%, rgba(11,15,22,.78) 75%);
-  }
   .hero-inner { position: relative; z-index: 1; padding-block: 96px; max-width: 860px; }
   .hero h1 {
     color: #fff;
@@ -381,7 +377,6 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="home">
-    <canvas id="scene" aria-hidden="true"></canvas>
     <div class="wrap hero-inner">
       <h1>Game Developer &amp; <span class="hl">Blender Artist</span></h1>
       <p class="sub">I'm Ehsan Khadim. I write the gameplay code and model the 3D assets, so an idea goes from sketch to a playable build without waiting on a hand-off.</p>
@@ -644,6 +639,7 @@
   });
 
   /* Scroll progress, back to top, active nav */
+  var header = document.querySelector('.header');
   var bar = document.getElementById('progress'), up = document.getElementById('to-top');
   var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
   var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
@@ -652,6 +648,7 @@
     var y = window.scrollY;
     bar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
     up.classList.toggle('show', y > 500);
+    header.classList.toggle('scrolled', y > 8);
     var idx = 0;
     sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < 140) idx = i; });
     links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
@@ -660,70 +657,6 @@
   onScroll();
   up.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-  /* Hero: wireframe viewport scene */
-  var canvas = document.getElementById('scene'), ctx = canvas.getContext('2d');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W, H, DPR;
-  function resize() {
-    DPR = Math.min(window.devicePixelRatio || 1, 2);
-    W = canvas.clientWidth; H = canvas.clientHeight;
-    canvas.width = W * DPR; canvas.height = H * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  }
-  var cubeV = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]];
-  var cubeE = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
-  var objs = [
-    { x: -0.34, y: 0.30, s: 54, sp: 0.5, ph: 0 },
-    { x: 0.36, y: 0.26, s: 40, sp: -0.7, ph: 1.4 },
-    { x: 0.24, y: 0.74, s: 30, sp: 0.9, ph: 2.2 },
-    { x: -0.28, y: 0.76, s: 24, sp: -1.1, ph: 3.1 }
-  ];
-  function drawCube(o, t) {
-    var a = t * o.sp + o.ph, b = a * 0.7;
-    var ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b);
-    var cx = W / 2 + o.x * W, cy = o.y * H + Math.sin(t + o.ph) * 8;
-    var p = cubeV.map(function (v) {
-      var x = v[0] * ca - v[2] * sa, z = v[0] * sa + v[2] * ca;
-      var y = v[1] * cb - z * sb; z = v[1] * sb + z * cb;
-      var k = 4 / (4 + z);
-      return [cx + x * o.s * k, cy + y * o.s * k];
-    });
-    ctx.strokeStyle = 'rgba(251,191,36,.55)'; ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    cubeE.forEach(function (e) { ctx.moveTo(p[e[0]][0], p[e[0]][1]); ctx.lineTo(p[e[1]][0], p[e[1]][1]); });
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(251,191,36,.8)';
-    p.forEach(function (q) { ctx.fillRect(q[0] - 1.5, q[1] - 1.5, 3, 3); });
-  }
-  function frame(ms) {
-    var t = ms / 1000;
-    ctx.clearRect(0, 0, W, H);
-    var hor = H * 0.48, vx = W / 2;
-    /* floor grid */
-    ctx.lineWidth = 1;
-    for (var i = -24; i <= 24; i++) {
-      ctx.strokeStyle = i === 0 ? 'rgba(245,158,11,.45)' : 'rgba(255,255,255,.10)';
-      ctx.beginPath(); ctx.moveTo(vx, hor); ctx.lineTo(vx + i * W * 0.09, H); ctx.stroke();
-    }
-    var off = (t * 0.35) % 1;
-    for (var j = 0; j < 22; j++) {
-      var z = j + 1 - off, y = hor + (H - hor) * (1 / z) * 0.9;
-      if (y > H || y < hor) continue;
-      var a = Math.min(1, (y - hor) / (H - hor) * 1.6) * 0.22;
-      ctx.strokeStyle = 'rgba(255,255,255,' + a + ')';
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
-    }
-    /* ceiling grid, mirrored and fainter */
-    for (var k = -24; k <= 24; k++) {
-      ctx.strokeStyle = 'rgba(255,255,255,.05)';
-      ctx.beginPath(); ctx.moveTo(vx, hor); ctx.lineTo(vx + k * W * 0.09, 0); ctx.stroke();
-    }
-    objs.forEach(function (o) { drawCube(o, t); });
-    if (!reduce) requestAnimationFrame(frame);
-  }
-  resize();
-  window.addEventListener('resize', function () { resize(); if (reduce) frame(0); });
-  requestAnimationFrame(frame);
 })();
 </script>
 </body>
